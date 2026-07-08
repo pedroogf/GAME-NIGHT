@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chuta Aí</title>
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+
+    <div class="container">
+
+        <!-- Link de volta para o hub Game Night -->
+        <a href="../index.html" class="link-hub">← Game Night</a>
+
+        <!-- ================= TELA 1: CATEGORIAS ================= -->
+        <section id="tela-categorias" class="tela ativa">
+            <header class="cabecalho">
+                <p class="eyebrow">O jogo do palpite</p>
+                <h1 class="logo">Chuta <span class="logo-ai">Aí</span> 🎯</h1>
+                <p class="tagline">Uma pergunta, um número. Cada um dá seu chute em voz alta<br>e quem chegar mais perto da resposta vence a rodada!</p>
+            </header>
+
+            <button class="btn-todas" onclick="iniciarJogo('todas')">
+                <span class="todas-emoji">🌀</span>
+                <span class="todas-info">
+                    <span class="todas-nome">Jogar com tudo</span>
+                    <span class="todas-desc">Todas as categorias misturadas · 300 perguntas</span>
+                </span>
+                <span class="todas-seta">›</span>
+            </button>
+
+            <p class="titulo-secao">…ou escolha um tema</p>
+
+            <div class="grade-categorias" id="grade-categorias">
+                <!-- chips gerados pelo JS -->
+            </div>
+        </section>
+
+        <!-- ================= TELA 2: JOGO ================= -->
+        <section id="tela-jogo" class="tela">
+
+            <div class="barra-topo">
+                <button class="chip-categoria" id="chip-categoria" onclick="voltarCategorias()">🌀 Todas · trocar</button>
+                <div class="contador" id="contador">📋 <b id="num-restantes">0</b> restantes</div>
+            </div>
+
+            <div class="cartao" id="cartao">
+                <span class="tag-categoria" id="tag-categoria">🐾 Animais</span>
+                <p class="pergunta" id="texto-pergunta">Toque em "Nova Pergunta" para começar!</p>
+
+                <!-- Resposta (escondida até clicar) -->
+                <div class="painel-resposta" id="painel-resposta">
+                    <p class="resposta-rotulo">Resposta</p>
+                    <p class="resposta-valor"><span id="valor-resposta">—</span> <span class="resposta-unidade" id="unidade-resposta"></span></p>
+                    <div class="curiosidade">
+                        <span class="curiosidade-icone">💡</span>
+                        <p id="texto-curiosidade"></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="botoes">
+                <button class="btn-resposta" id="btn-resposta" onclick="mostrarResposta()" disabled>👀 Mostrar Resposta</button>
+                <button class="btn-nova" id="btn-nova" onclick="novaPergunta()">🎲 Nova Pergunta</button>
+            </div>
+
+            <!-- Aviso de fim de baralho -->
+            <div class="fim-baralho" id="fim-baralho" style="display:none;">
+                <p>🏁 Acabaram as perguntas deste tema!</p>
+                <button class="btn-reiniciar" onclick="reiniciarBaralho()">🔄 Embaralhar de novo</button>
+            </div>
+        </section>
+
+    </div>
+
+    <script src="js/perguntas.js"></script>
+    <script src="js/jogo.js"></script>
+</body>
+</html>

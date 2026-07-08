@@ -38,6 +38,22 @@ const JOGOS = [
     jogadores: "2+ jogadores",
     cor: "#C62839",
     link: "SUECA/index.html"
+  },
+  {
+    emoji: "💸",
+    nome: "Green ou Gole",
+    descricao: "Aposte nos desafios da roda: deu green ou alguém bebe!",
+    jogadores: "3+ jogadores",
+    cor: "#22E584",
+    link: "GREEN-GOLE/index.html"
+  },
+  {
+    emoji: "🎯",
+    nome: "Chuta Aí",
+    descricao: "Perguntas curiosas de números: quem chutar mais perto vence!",
+    jogadores: "2+ jogadores",
+    cor: "#4EA8FF",
+    link: "chuta-ai/index.html"
   }
 
   // 👉 Novo jogo? Adicione uma vírgula acima e cole um bloco aqui.

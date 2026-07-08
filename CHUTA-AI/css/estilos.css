@@ -1,0 +1,377 @@
+/* ============================================================
+   CHUTA AÍ — ESTILOS
+   Tema escuro · destaques em amarelo e azul · mobile first
+   ============================================================ */
+
+:root {
+  --fundo: #0d1117;
+  --fundo-card: #161d27;
+  --fundo-card-2: #1c2532;
+  --borda: #2a3648;
+  --texto: #eef2f7;
+  --texto-suave: #8b98ab;
+  --amarelo: #ffd447;
+  --amarelo-escuro: #b8920a;
+  --azul: #4ea8ff;
+  --azul-escuro: #1c4e80;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  background: var(--fundo);
+  background-image:
+    radial-gradient(circle at 15% 10%, rgba(78, 168, 255, 0.08), transparent 40%),
+    radial-gradient(circle at 85% 90%, rgba(255, 212, 71, 0.06), transparent 40%);
+  color: var(--texto);
+  font-family: "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+.container {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 16px 16px 40px;
+}
+
+/* ---------- Link de volta ---------- */
+.link-hub {
+  display: inline-block;
+  color: var(--texto-suave);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 8px 0;
+  margin-bottom: 4px;
+  transition: color 0.2s;
+}
+
+.link-hub:active,
+.link-hub:hover { color: var(--amarelo); }
+
+/* ---------- Telas ---------- */
+.tela { display: none; animation: aparecer 0.35s ease; }
+.tela.ativa { display: block; }
+
+@keyframes aparecer {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- Cabeçalho ---------- */
+.cabecalho { text-align: center; margin: 12px 0 24px; }
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--azul);
+  margin-bottom: 6px;
+}
+
+.logo {
+  font-size: 2.4rem;
+  font-weight: 800;
+  letter-spacing: -1px;
+}
+
+.logo-ai { color: var(--amarelo); }
+
+.tagline {
+  color: var(--texto-suave);
+  font-size: 0.88rem;
+  line-height: 1.5;
+  margin-top: 10px;
+}
+
+/* ---------- Botão "todas" ---------- */
+.btn-todas {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: linear-gradient(135deg, rgba(255, 212, 71, 0.14), rgba(78, 168, 255, 0.14));
+  border: 1px solid var(--amarelo);
+  border-radius: 16px;
+  padding: 16px;
+  color: var(--texto);
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.btn-todas:active { transform: scale(0.98); }
+
+.todas-emoji { font-size: 1.9rem; }
+
+.todas-info { flex: 1; display: flex; flex-direction: column; gap: 3px; }
+
+.todas-nome { font-size: 1.05rem; font-weight: 800; color: var(--amarelo); }
+
+.todas-desc { font-size: 0.8rem; color: var(--texto-suave); }
+
+.todas-seta { font-size: 1.5rem; color: var(--amarelo); }
+
+/* ---------- Grade de categorias ---------- */
+.titulo-secao {
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--texto-suave);
+  text-align: center;
+  margin: 22px 0 14px;
+}
+
+.grade-categorias {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.chip-cat {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--fundo-card);
+  border: 1px solid var(--borda);
+  border-radius: 12px;
+  padding: 12px 14px;
+  color: var(--texto);
+  font-family: inherit;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.15s, border-color 0.15s, background 0.15s;
+}
+
+.chip-cat:active {
+  transform: scale(0.96);
+  border-color: var(--azul);
+  background: var(--fundo-card-2);
+}
+
+.chip-cat .cat-emoji { font-size: 1.2rem; }
+
+/* ---------- Barra do topo (jogo) ---------- */
+.barra-topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 8px 0 16px;
+}
+
+.chip-categoria {
+  background: var(--fundo-card);
+  border: 1px solid var(--borda);
+  border-radius: 999px;
+  color: var(--texto-suave);
+  font-family: inherit;
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 8px 14px;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 60%;
+}
+
+.chip-categoria:active { border-color: var(--azul); color: var(--azul); }
+
+.contador {
+  background: rgba(78, 168, 255, 0.1);
+  border: 1px solid var(--azul-escuro);
+  border-radius: 999px;
+  color: var(--azul);
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 8px 14px;
+  white-space: nowrap;
+}
+
+.contador b { font-weight: 800; }
+
+/* ---------- Cartão da pergunta ---------- */
+.cartao {
+  background: var(--fundo-card);
+  border: 1px solid var(--borda);
+  border-radius: 20px;
+  padding: 28px 20px;
+  text-align: center;
+  min-height: 260px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+}
+
+/* animação de troca de pergunta */
+.cartao.trocando { animation: trocarCartao 0.4s ease; }
+
+@keyframes trocarCartao {
+  0%   { opacity: 0; transform: translateX(30px) scale(0.97); }
+  100% { opacity: 1; transform: translateX(0) scale(1); }
+}
+
+.tag-categoria {
+  background: rgba(255, 212, 71, 0.12);
+  border: 1px solid rgba(255, 212, 71, 0.4);
+  color: var(--amarelo);
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 6px 14px;
+  letter-spacing: 0.5px;
+}
+
+.pergunta {
+  font-size: 1.5rem;
+  font-weight: 800;
+  line-height: 1.35;
+  letter-spacing: -0.3px;
+}
+
+/* ---------- Painel da resposta ---------- */
+.painel-resposta {
+  display: none;
+  width: 100%;
+  border-top: 1px dashed var(--borda);
+  padding-top: 18px;
+  animation: revelar 0.45s ease;
+}
+
+.painel-resposta.visivel { display: block; }
+
+@keyframes revelar {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.resposta-rotulo {
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--texto-suave);
+  margin-bottom: 6px;
+}
+
+.resposta-valor {
+  font-size: 2.3rem;
+  font-weight: 800;
+  color: var(--azul);
+  line-height: 1.1;
+}
+
+.resposta-unidade {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--texto-suave);
+}
+
+.curiosidade {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  text-align: left;
+  background: rgba(255, 212, 71, 0.07);
+  border: 1px solid rgba(255, 212, 71, 0.2);
+  border-radius: 12px;
+  padding: 12px 14px;
+  margin-top: 16px;
+}
+
+.curiosidade-icone { font-size: 1.1rem; }
+
+.curiosidade p {
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--texto);
+  opacity: 0.9;
+}
+
+/* ---------- Botões de ação ---------- */
+.botoes {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.btn-resposta,
+.btn-nova,
+.btn-reiniciar {
+  width: 100%;
+  border: none;
+  border-radius: 14px;
+  font-family: inherit;
+  font-size: 1.05rem;
+  font-weight: 800;
+  padding: 16px;
+  cursor: pointer;
+  transition: transform 0.15s, opacity 0.15s;
+}
+
+.btn-resposta {
+  background: transparent;
+  border: 2px solid var(--azul);
+  color: var(--azul);
+}
+
+.btn-resposta:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.btn-resposta:not(:disabled):active { transform: scale(0.97); }
+
+.btn-nova {
+  background: linear-gradient(135deg, var(--amarelo), #ffb830);
+  color: #201a05;
+  box-shadow: 0 8px 22px rgba(255, 212, 71, 0.25);
+}
+
+.btn-nova:active { transform: scale(0.97); }
+
+/* ---------- Fim do baralho ---------- */
+.fim-baralho {
+  text-align: center;
+  background: var(--fundo-card);
+  border: 1px solid var(--borda);
+  border-radius: 16px;
+  padding: 20px;
+  margin-top: 16px;
+  animation: aparecer 0.3s ease;
+}
+
+.fim-baralho p {
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+
+.btn-reiniciar {
+  background: var(--azul);
+  color: #06121f;
+}
+
+.btn-reiniciar:active { transform: scale(0.97); }
+
+/* ---------- Telas maiores ---------- */
+@media (min-width: 480px) {
+  .grade-categorias { grid-template-columns: repeat(3, 1fr); }
+  .pergunta { font-size: 1.7rem; }
+  .botoes { flex-direction: row; }
+}

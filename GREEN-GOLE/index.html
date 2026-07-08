@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Green ou Gole</title>
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+
+    <div class="container">
+
+        <!-- Link de volta para o hub Game Night -->
+        <a href="../index.html" class="link-hub">← Game Night</a>
+
+        <!-- ================= TELA 1: SELEÇÃO DE TEMA ================= -->
+        <section id="tela-temas" class="tela ativa">
+            <header class="cabecalho">
+                <p class="eyebrow">Casa de apostas do rolê</p>
+                <h1 class="logo">Green <span class="logo-ou">ou</span> Gole</h1>
+                <p class="tagline">Um alvo, um desafio, uma odd. A roda aposta SIM ou NÃO.<br>Deu green? Quem apostou contra bebe. Deu red? Já sabe…</p>
+            </header>
+
+            <p class="titulo-secao">Escolha o mercado</p>
+
+            <button class="card-tema" data-tema="futebol" onclick="selecionarTema('futebol')">
+                <span class="tema-emoji">⚽</span>
+                <span class="tema-info">
+                    <span class="tema-nome">Futebol</span>
+                    <span class="tema-desc">Desafios de bola: times, ídolos, narrações e zoeira de arquibancada.</span>
+                </span>
+                <span class="tema-seta">›</span>
+            </button>
+
+            <button class="card-tema" data-tema="resenha" onclick="selecionarTema('resenha')">
+                <span class="tema-emoji">🍻</span>
+                <span class="tema-info">
+                    <span class="tema-nome">Resenha</span>
+                    <span class="tema-desc">Coisas aleatórias e engraçadas: mímica, trava-língua e micos em geral.</span>
+                </span>
+                <span class="tema-seta">›</span>
+            </button>
+        </section>
+
+        <!-- ================= TELA 2: JOGO ================= -->
+        <section id="tela-jogo" class="tela">
+
+            <!-- Barra superior: tema atual + placar -->
+            <div class="barra-topo">
+                <button class="chip-tema" id="chip-tema" onclick="trocarTema()">⚽ Futebol · trocar</button>
+                <div class="ao-vivo"><span class="ponto"></span>AO VIVO</div>
+            </div>
+
+            <div class="placar">
+                <div class="placar-item placar-green">GREEN <b id="placar-green">0</b></div>
+                <div class="placar-rodada">Rodada <b id="num-rodada">0</b></div>
+                <div class="placar-item placar-red">RED <b id="placar-red">0</b></div>
+            </div>
+
+            <!-- Bilhete de aposta -->
+            <div class="bilhete">
+                <div class="bilhete-topo">
+                    <span class="mercado-titulo" id="mercado-titulo">Mercado de Desafios</span>
+                </div>
+
+                <div class="alvo" id="alvo-box" style="display:none;">
+                    🎯 Alvo: <b id="alvo-nome"></b>
+                </div>
+
+                <p class="desafio-texto" id="texto-desafio">Toque em "Nova Aposta" para abrir o mercado!</p>
+
+                <!-- Odds -->
+                <div class="odds-container" id="odds-box" style="display:none;">
+                    <div class="odd-card">
+                        <span class="odd-label">✅ SIM (consegue)</span>
+                        <span class="odd-valor" id="odd-sim">-.--</span>
+                    </div>
+                    <div class="odd-card">
+                        <span class="odd-label">❌ NÃO (pipoca)</span>
+                        <span class="odd-valor" id="odd-nao">-.--</span>
+                    </div>
+                </div>
+
+                <p class="aviso-aposta" id="aviso-aposta" style="display:none;">✋ Todo mundo aposta em voz alta: SIM ou NÃO?</p>
+
+                <!-- Cronômetro rápido -->
+                <div class="timer-row" id="timer-row" style="display:none;">
+                    <button class="chip-timer" onclick="iniciarTimer(10, this)">⏱ 10s</button>
+                    <button class="chip-timer" onclick="iniciarTimer(15, this)">⏱ 15s</button>
+                    <button class="chip-timer" onclick="iniciarTimer(20, this)">⏱ 20s</button>
+                </div>
+
+                <!-- Botões do juiz -->
+                <div class="botoes-acao" id="botoes-acao" style="display:none;">
+                    <button class="btn-green" id="btn-green" onclick="resolverAposta(true)">✅ DEU GREEN</button>
+                    <button class="btn-red" id="btn-red" onclick="resolverAposta(false)">❌ DEU RED</button>
+                </div>
+            </div>
+
+            <!-- Resultado -->
+            <div id="resultado-box"></div>
+
+            <button class="btn-gerar" id="btn-gerar" onclick="gerarAposta()">🎲 Nova Aposta</button>
+        </section>
+
+    </div>
+
+    <script src="js/temas.js"></script>
+    <script src="js/jogo.js"></script>
+</body>
+</html>

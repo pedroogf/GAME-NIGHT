@@ -1,0 +1,411 @@
+/* ============================================================
+   GREEN OU GOLE — casa de apostas do rolê
+   Tema escuro estilo sportsbook, mobile-first.
+   ============================================================ */
+
+:root {
+  --bg:         #090E12;
+  --bg-2:       #0E1A16;
+  --card:       #121B22;
+  --card-2:     #182430;
+  --linha:      rgba(255, 255, 255, 0.09);
+  --texto:      #F2F7F4;
+  --texto-dim:  #93A6A0;
+  --green:      #22E584;
+  --green-esc:  #0E9E56;
+  --red:        #FF5252;
+  --red-esc:    #C62828;
+  --dourado:    #FFC94D;
+  --raio:       18px;
+  --sombra:     0 16px 40px rgba(0, 0, 0, 0.5);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', -apple-system, 'Segoe UI', Tahoma, sans-serif;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  background:
+    radial-gradient(ellipse 90% 55% at 50% -10%, rgba(34, 229, 132, 0.14), transparent 60%),
+    radial-gradient(ellipse 70% 50% at 100% 100%, rgba(255, 201, 77, 0.07), transparent 55%),
+    var(--bg);
+  color: var(--texto);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  padding: 24px 18px calc(28px + env(safe-area-inset-bottom));
+}
+
+.container {
+  width: 100%;
+  max-width: 460px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ================= LINK DE VOLTA ================= */
+.link-hub {
+  align-self: flex-start;
+  color: var(--texto-dim);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border: 1px solid var(--linha);
+  border-radius: 999px;
+  margin-bottom: 18px;
+  transition: color 0.2s, border-color 0.2s;
+}
+.link-hub:active { color: var(--green); border-color: var(--green); }
+
+/* ================= TELAS ================= */
+.tela { display: none; flex-direction: column; gap: 14px; animation: surgir 0.35s ease both; }
+.tela.ativa { display: flex; }
+
+@keyframes surgir {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ================= CABEÇALHO ================= */
+.cabecalho { text-align: center; margin-bottom: 6px; }
+
+.eyebrow {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--texto-dim);
+  margin-bottom: 8px;
+}
+
+.logo {
+  font-size: 44px;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  background: linear-gradient(100deg, #7CFFB9 0%, #22E584 45%, #FFC94D 110%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 4px 18px rgba(34, 229, 132, 0.3));
+}
+.logo-ou { font-size: 0.55em; vertical-align: middle; }
+
+.tagline {
+  color: var(--texto-dim);
+  font-size: 14px;
+  line-height: 1.55;
+  margin-top: 10px;
+}
+
+/* ================= SELEÇÃO DE TEMA ================= */
+.titulo-secao {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--texto-dim);
+  margin-top: 8px;
+}
+
+.card-tema {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  text-align: left;
+  background: var(--card);
+  border: 1px solid var(--linha);
+  border-radius: var(--raio);
+  padding: 18px 16px;
+  cursor: pointer;
+  color: var(--texto);
+  box-shadow: var(--sombra);
+  transition: transform 0.12s ease, border-color 0.2s;
+}
+.card-tema:active { transform: scale(0.97); }
+.card-tema[data-tema="futebol"]:active { border-color: var(--green); }
+.card-tema[data-tema="resenha"]:active { border-color: var(--dourado); }
+
+.tema-emoji {
+  font-size: 34px;
+  width: 58px;
+  height: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--card-2);
+  border-radius: 14px;
+  flex-shrink: 0;
+}
+
+.tema-info { display: flex; flex-direction: column; gap: 4px; }
+.tema-nome { font-size: 18px; font-weight: 800; }
+.tema-desc { font-size: 13px; color: var(--texto-dim); line-height: 1.4; }
+
+.tema-seta { margin-left: auto; font-size: 26px; color: var(--texto-dim); }
+
+/* ================= BARRA DO TOPO (JOGO) ================= */
+.barra-topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.chip-tema {
+  background: var(--card);
+  border: 1px solid var(--linha);
+  color: var(--texto);
+  font-size: 13px;
+  font-weight: 700;
+  padding: 8px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: transform 0.12s;
+}
+.chip-tema:active { transform: scale(0.95); }
+
+.ao-vivo {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: var(--red);
+}
+.ponto {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--red);
+  animation: pulsar 1.2s ease-in-out infinite;
+}
+@keyframes pulsar {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.35; transform: scale(0.75); }
+}
+
+/* ================= PLACAR ================= */
+.placar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--card);
+  border: 1px solid var(--linha);
+  border-radius: 14px;
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: 700;
+}
+.placar-item b { font-size: 16px; margin-left: 4px; }
+.placar-green { color: var(--green); }
+.placar-red   { color: var(--red); }
+.placar-rodada { color: var(--texto-dim); }
+.placar-rodada b { color: var(--texto); }
+
+/* ================= BILHETE DE APOSTA ================= */
+.bilhete {
+  position: relative;
+  background: var(--card);
+  border: 1px solid var(--linha);
+  border-radius: var(--raio);
+  padding: 20px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  box-shadow: var(--sombra);
+}
+
+/* "furos" de bilhete nas laterais */
+.bilhete::before, .bilhete::after {
+  content: "";
+  position: absolute;
+  top: 54px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 1px solid var(--linha);
+}
+.bilhete::before { left: -10px; }
+.bilhete::after  { right: -10px; }
+
+.bilhete-topo {
+  border-bottom: 1px dashed var(--linha);
+  padding-bottom: 12px;
+}
+
+.mercado-titulo {
+  font-size: 12px;
+  color: var(--texto-dim);
+  text-transform: uppercase;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.alvo {
+  font-size: 14px;
+  color: var(--dourado);
+  background: rgba(255, 201, 77, 0.09);
+  border: 1px solid rgba(255, 201, 77, 0.25);
+  border-radius: 10px;
+  padding: 8px 12px;
+  align-self: center;
+}
+
+.desafio-texto {
+  font-size: 1.3rem;
+  font-weight: 800;
+  line-height: 1.4;
+  min-height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ================= ODDS ================= */
+.odds-container { display: flex; gap: 10px; }
+
+.odd-card {
+  flex: 1;
+  background: var(--card-2);
+  padding: 12px 8px;
+  border-radius: 12px;
+  border: 1px solid var(--linha);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.odd-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--texto-dim);
+}
+.odd-valor {
+  color: var(--green);
+  font-size: 1.7rem;
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+  text-shadow: 0 0 18px rgba(34, 229, 132, 0.35);
+}
+
+.aviso-aposta {
+  font-size: 13px;
+  color: var(--texto-dim);
+  animation: pulsar-texto 1.6s ease-in-out infinite;
+  text-align: center;
+}
+@keyframes pulsar-texto {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.45; }
+}
+
+/* ================= CRONÔMETRO ================= */
+.timer-row { display: flex; gap: 8px; justify-content: center; }
+
+.chip-timer {
+  background: var(--card-2);
+  border: 1px solid var(--linha);
+  color: var(--texto);
+  font-size: 13px;
+  font-weight: 700;
+  padding: 8px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  min-width: 72px;
+  font-variant-numeric: tabular-nums;
+  transition: transform 0.12s;
+}
+.chip-timer:active { transform: scale(0.95); }
+.chip-timer.contando {
+  border-color: var(--dourado);
+  color: var(--dourado);
+  animation: pulsar-texto 1s ease-in-out infinite;
+}
+
+/* ================= BOTÕES DO JUIZ ================= */
+.botoes-acao { display: flex; gap: 10px; }
+
+.btn-green, .btn-red {
+  flex: 1;
+  border: none;
+  padding: 15px 8px;
+  border-radius: 12px;
+  font-weight: 900;
+  font-size: 0.95rem;
+  cursor: pointer;
+  color: #fff;
+  letter-spacing: 0.03em;
+  transition: transform 0.12s, opacity 0.2s;
+}
+.btn-green {
+  background: linear-gradient(160deg, var(--green), var(--green-esc));
+  box-shadow: 0 6px 18px rgba(34, 229, 132, 0.3);
+  color: #06281A;
+}
+.btn-red {
+  background: linear-gradient(160deg, var(--red), var(--red-esc));
+  box-shadow: 0 6px 18px rgba(255, 82, 82, 0.25);
+}
+.btn-green:active, .btn-red:active { transform: scale(0.95); }
+.btn-green:disabled, .btn-red:disabled { opacity: 0.4; cursor: default; }
+
+/* ================= RESULTADO ================= */
+#resultado-box {
+  display: none;
+  padding: 20px 16px;
+  border-radius: var(--raio);
+  font-size: 1.05rem;
+  font-weight: 600;
+  line-height: 1.55;
+  animation: estourar 0.35s cubic-bezier(0.2, 1.4, 0.4, 1) both;
+  text-align: center;
+}
+#resultado-box.green {
+  display: block;
+  background: rgba(34, 229, 132, 0.12);
+  border: 1px solid rgba(34, 229, 132, 0.45);
+}
+#resultado-box.red {
+  display: block;
+  background: rgba(255, 82, 82, 0.12);
+  border: 1px solid rgba(255, 82, 82, 0.45);
+}
+.resultado-titulo { font-size: 1.4rem; font-weight: 900; display: block; margin-bottom: 8px; }
+#resultado-box.green .resultado-titulo { color: var(--green); }
+#resultado-box.red   .resultado-titulo { color: var(--red); }
+.resultado-goles { color: var(--dourado); font-weight: 900; }
+.resultado-extra { font-size: 0.85rem; color: var(--texto-dim); display: block; margin-top: 8px; }
+
+@keyframes estourar {
+  from { opacity: 0; transform: scale(0.9); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* ================= BOTÃO PRINCIPAL ================= */
+.btn-gerar {
+  background: linear-gradient(100deg, #7CFFB9, var(--green));
+  color: #06281A;
+  border: none;
+  padding: 16px;
+  font-size: 1.1rem;
+  font-weight: 900;
+  border-radius: 999px;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  box-shadow: 0 8px 24px rgba(34, 229, 132, 0.35);
+  transition: transform 0.12s;
+  margin-top: 4px;
+}
+.btn-gerar:active { transform: scale(0.97); }
+.btn-gerar:disabled { opacity: 0.5; cursor: default; }
