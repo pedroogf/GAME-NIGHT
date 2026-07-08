@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+<title>Impostor — Jogo de Festa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+
+<div id="app">
+
+
+  <div class="screen active" id="screen-mode">
+    <div class="top-nav">
+      <a class="back-link" href="../index.html">‹ Game Night</a>
+    </div>
+    <div class="eyebrow">Jogo de festa · ⚽</div>
+    <h1 class="display">IMPOSTOR</h1>
+    <p class="sub">Escolha o modo de jogo para começar.</p>
+    <div class="mode-cards">
+      <div class="mode-card" onclick="selectMode('classic')">
+        <div class="m-title">🕵️ Clássico</div>
+        <div class="m-desc">Todo mundo recebe a mesma palavra secreta. Um ou mais impostores recebem só uma dica rápida e precisam se disfarçar no debate.</div>
+      </div>
+      <div class="mode-card" onclick="selectMode('dupla')">
+        <div class="m-title">👥 Encontre sua Dupla</div>
+        <div class="m-desc">Os jogadores são divididos em duplas, cada uma com sua própria palavra. O impostor não tem dupla e precisa se infiltrar escutando os outros.</div>
+      </div>
+    </div>
+    <div class="spacer"></div>
+    <p class="sub" style="margin:0; text-align:center; font-size:12px;">Mínimo de 3 jogadores no Clássico · 5 na Dupla</p>
+  </div>
+
+
+  <div class="screen" id="screen-setup">
+    <div class="top-nav">
+      <button class="back-link" onclick="goToScreen('screen-mode')">‹ Voltar</button>
+    </div>
+    <div class="eyebrow" id="setup-eyebrow">Configuração</div>
+    <h2 class="display" id="setup-title">Quem vai jogar?</h2>
+
+
+    <div class="field">
+      <label>Número de jogadores</label>
+      <div class="stepper">
+        <button onclick="changePlayers(-1)">−</button>
+        <div class="val" id="players-val">5</div>
+        <button onclick="changePlayers(1)">+</button>
+      </div>
+    </div>
+
+
+    <div class="field">
+      <label>Número de impostores</label>
+      <div class="stepper">
+        <button onclick="changeImpostors(-1)">−</button>
+        <div class="val" id="impostors-val">1</div>
+        <button onclick="changeImpostors(1)">+</button>
+      </div>
+      <div class="warn" id="impostor-warn"></div>
+    </div>
+
+
+    <div class="field">
+      <label>Categorias (escolha 1 ou mais)</label>
+      <div class="cat-grid" id="cat-grid"></div>
+    </div>
+
+
+    <div class="spacer"></div>
+    <button class="btn" id="setup-continue" onclick="startDistribution()">Continuar</button>
+  </div>
+
+
+  <div class="screen" id="screen-pass">
+    <div class="pass-wrap">
+      <div class="whistle">📱➡️</div>
+      <div class="eyebrow">Passe o celular para</div>
+      <div class="pass-name" id="pass-player-name">—</div>
+
+
+      <div class="board-wrap">
+        <div class="board" id="board" onclick="handleBoardTap()">
+          <div class="board-face board-front">
+            <div class="digit">?</div>
+            <div class="tap-hint">Toque para revelar</div>
+          </div>
+          <div class="board-face board-back" id="board-back">
+            <div class="role-tag" id="board-role">Sua palavra</div>
+            <div class="word" id="board-word">—</div>
+            <div class="hint" id="board-hint"></div>
+            <div class="reminder" id="board-reminder"></div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="progress-dots" id="progress-dots"></div>
+    </div>
+    <button class="btn" id="pass-action-btn" onclick="handleBoardTap()">Sou eu, revelar</button>
+  </div>
+
+
+  <div class="screen" id="screen-debate">
+    <div class="eyebrow">Rodada em andamento</div>
+    <h2 class="display" id="debate-title">Hora do debate</h2>
+    <div class="instr-card" id="debate-instr"></div>
+    <label style="font-size:12px; text-transform:uppercase; letter-spacing:0.09em; color:var(--text-dim); font-weight:600; margin-bottom:8px; display:block;">Jogadores nesta rodada</label>
+    <div class="roster" id="debate-roster"></div>
+    <div class="spacer"></div>
+    <button class="btn" id="debate-continue-btn">Ver Resultados</button>
+  </div>
+
+
+  <div class="screen" id="screen-reveal">
+    <div class="eyebrow">Resultado Final</div>
+    <h2 class="display">Revelação</h2>
+    <div class="summary-banner" id="reveal-summary"></div>
+    <div class="reveal-scroll" id="reveal-list"></div>
+    <div class="btn-row">
+      <button class="btn ghost" onclick="restartFull()">Reiniciar tudo</button>
+      <button class="btn" onclick="newRoundSamePlayers()">Nova rodada</button>
+    </div>
+  </div>
+
+
+</div>
+
+
+<script src="js/data.js"></script>
+<script src="js/state.js"></script>
+<script src="js/setup.js"></script>
+<script src="js/game.js"></script>
+</body>
+</html>

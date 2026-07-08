@@ -1,0 +1,261 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #121212;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+    text-align: center;
+}
+
+.container {
+    width: 100%;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Alterna entre as telas (menu / jogo) */
+.tela.escondido {
+    display: none;
+}
+
+h1 {
+    font-size: 1.8rem;
+    color: #ff3366;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 0 0 10px rgba(255, 51, 102, 0.5);
+}
+
+.subtitulo {
+    color: #aaa;
+    font-size: 1rem;
+    margin-top: -8px;
+}
+
+.ou {
+    color: #666;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* ================= MENU: MODO ALEATÓRIO ================= */
+.btn-aleatorio {
+    background: linear-gradient(45deg, #00ffcc, #00b3ff);
+    color: #08221f;
+    line-height: 1.3;
+    box-shadow: 0 4px 20px rgba(0, 255, 204, 0.4);
+}
+
+.btn-aleatorio span {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    opacity: 0.8;
+}
+
+/* ================= MENU: GRADE DE TÓPICOS ================= */
+.grade-topicos {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    width: 100%;
+}
+
+.card-topico {
+    background: #1e1e1e;
+    border: 2px solid #333;
+    border-radius: 14px;
+    padding: 18px 10px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    transition: transform 0.1s, border-color 0.2s, box-shadow 0.2s;
+    color: #fff;
+}
+
+.card-topico:hover {
+    border-color: #ff3366;
+    box-shadow: 0 6px 18px rgba(255, 51, 102, 0.25);
+}
+
+.card-topico:active {
+    transform: scale(0.97);
+}
+
+.card-topico .emoji {
+    font-size: 2.2rem;
+}
+
+.card-topico .nome {
+    font-size: 0.95rem;
+    font-weight: bold;
+}
+
+.card-topico .qtd {
+    font-size: 0.75rem;
+    color: #888;
+}
+
+/* ================= VOLTAR AO HUB (Game Night) ================= */
+.link-hub {
+    align-self: flex-start;
+    color: #888;
+    text-decoration: none;
+    font-size: 0.9rem;
+    padding: 8px 14px;
+    border-radius: 20px;
+    border: 1px solid #333;
+    background: rgba(255, 255, 255, 0.03);
+    transition: color 0.2s, border-color 0.2s, transform 0.1s;
+}
+
+.link-hub:hover {
+    color: #fff;
+    border-color: #555;
+}
+
+.link-hub:active {
+    transform: scale(0.97);
+}
+
+/* ================= JOGO ================= */
+.btn-voltar {
+    background: transparent;
+    color: #888;
+    box-shadow: none;
+    padding: 6px;
+    font-size: 0.95rem;
+    font-weight: normal;
+    width: auto;
+    align-self: flex-start;
+}
+
+.btn-voltar:hover {
+    color: #fff;
+}
+
+#categoria-box {
+    background: #1e1e1e;
+    padding: 30px 20px;
+    border-radius: 15px;
+    width: 100%;
+    min-height: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: 2px solid #333;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+#categoria-grupo {
+    font-size: 0.9rem;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+#categoria-texto {
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: #00ffcc;
+}
+
+/* A Bomba Visual */
+#bomba-visual {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    background: #222;
+    border: 8px solid #00ff55;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 20px rgba(0, 255, 85, 0.2);
+}
+
+#bomba-visual.medio {
+    border-color: #ffcc00;
+    box-shadow: 0 0 30px rgba(255, 204, 0, 0.4);
+}
+
+#bomba-visual.perigo {
+    border-color: #ff3333;
+    box-shadow: 0 0 40px rgba(255, 51, 51, 0.7);
+    animation: pulsar 0.2s infinite alternate;
+}
+
+#bomba-visual.explodiu {
+    background: #ff3333;
+    border-color: #ffffff;
+    font-size: 5rem;
+    animation: tremer 0.1s infinite;
+}
+
+@keyframes pulsar {
+    from { transform: scale(1); }
+    to { transform: scale(1.05); }
+}
+
+@keyframes tremer {
+    0% { transform: translate(2px, 1px) rotate(0deg); }
+    10% { transform: translate(-1px, -2px) rotate(-1deg); }
+    20% { transform: translate(-3px, 0px) rotate(1deg); }
+    30% { transform: translate(0px, 2px) rotate(0deg); }
+    40% { transform: translate(1px, -1px) rotate(1deg); }
+    50% { transform: translate(-1px, 2px) rotate(-1deg); }
+    60% { transform: translate(-3px, 1px) rotate(0deg); }
+    70% { transform: translate(2px, 1px) rotate(-1deg); }
+    80% { transform: translate(-1px, -1px) rotate(1deg); }
+    90% { transform: translate(2px, 2px) rotate(0deg); }
+    100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
+
+button {
+    background: linear-gradient(45deg, #ff3366, #ff5e3a);
+    color: white;
+    border: none;
+    padding: 15px 40px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(255, 51, 102, 0.4);
+    transition: transform 0.1s, opacity 0.2s;
+    width: 100%;
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+#punicao-box {
+    display: none;
+    font-size: 1.3rem;
+    color: #ffcc00;
+    font-weight: bold;
+    margin-top: 10px;
+    background: rgba(255, 204, 0, 0.1);
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px dashed #ffcc00;
+}

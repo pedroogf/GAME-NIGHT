@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Game Night 🎲</title>
+
+  <!-- Ícone da aba (dado) -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎲</text></svg>">
+
+  <!-- Fontes (mesma família usada nos jogos, pra manter a identidade) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+
+  <main class="hub">
+
+    <!-- ================= CABEÇALHO ================= -->
+    <header class="cabecalho">
+      <div class="eyebrow">🌙 Noite de Jogos</div>
+      <h1 class="logo">GAME NIGHT</h1>
+      <p class="tagline">Escolha um jogo e reúna a galera.</p>
+    </header>
+
+    <!-- ================= LISTA DE JOGOS ================= -->
+    <!-- Preenchida automaticamente pelo app.js a partir do jogos.js -->
+    <section id="lista-jogos" class="lista-jogos"></section>
+
+    <!-- ================= RODAPÉ ================= -->
+    <footer class="rodape">
+      <span id="contador-jogos"></span>
+    </footer>
+
+  </main>
+
+  <!-- Banco de jogos: edite ESTE arquivo para adicionar novos jogos -->
+  <script src="jogos.js"></script>
+  <!-- Lógica que monta os cards -->
+  <script src="app.js"></script>
+</body>
+</html>

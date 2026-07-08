@@ -1,0 +1,220 @@
+/* ============================================================
+   GAME NIGHT — Hub de jogos
+   Tema escuro, mobile-first, moderno e amigável.
+   ============================================================ */
+
+:root {
+  --bg:        #0F0D1A;   /* fundo noite */
+  --bg-2:      #17122E;   /* brilho do gradiente */
+  --card:      rgba(255, 255, 255, 0.045);
+  --card-hover: rgba(255, 255, 255, 0.075);
+  --linha:     rgba(255, 255, 255, 0.09);
+  --texto:     #F5F3FF;
+  --texto-dim: #A7A1C9;
+  --texto-fraco: #6E6890;
+  --raio:      20px;
+  --sombra:    0 18px 40px rgba(0, 0, 0, 0.45);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  min-height: 100%;
+}
+
+body {
+  background:
+    radial-gradient(ellipse 80% 60% at 15% -5%, rgba(124, 92, 255, 0.22), transparent 60%),
+    radial-gradient(ellipse 70% 60% at 100% 100%, rgba(255, 92, 141, 0.16), transparent 55%),
+    var(--bg);
+  color: var(--texto);
+  font-family: 'Inter', -apple-system, 'Segoe UI', sans-serif;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  padding: 32px 20px calc(24px + env(safe-area-inset-bottom));
+}
+
+.hub {
+  width: 100%;
+  max-width: 460px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ================= CABEÇALHO ================= */
+.cabecalho {
+  text-align: center;
+  margin-bottom: 30px;
+  animation: surgir 0.5s ease both;
+}
+
+.eyebrow {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--texto-dim);
+  margin-bottom: 10px;
+}
+
+.logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 64px;
+  line-height: 0.9;
+  letter-spacing: 0.04em;
+  background: linear-gradient(100deg, #B79CFF 0%, #FF8FB1 55%, #FFB27A 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 4px 20px rgba(124, 92, 255, 0.25));
+}
+
+.tagline {
+  color: var(--texto-dim);
+  font-size: 15px;
+  margin-top: 6px;
+}
+
+/* ================= LISTA DE JOGOS ================= */
+.lista-jogos {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.jogo-card {
+  --cor: #7C5CFF; /* sobrescrita por jogo via inline style */
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  border-radius: var(--raio);
+  background: var(--card);
+  border: 1px solid var(--linha);
+  box-shadow: var(--sombra);
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  transition: transform 0.16s ease, border-color 0.2s ease,
+              background 0.2s ease, box-shadow 0.2s ease;
+  animation: surgir 0.5s ease both;
+}
+
+.jogo-card:hover {
+  background: var(--card-hover);
+  border-color: color-mix(in srgb, var(--cor) 55%, transparent);
+  transform: translateY(-3px);
+  box-shadow: 0 22px 44px rgba(0, 0, 0, 0.5),
+              0 0 0 1px color-mix(in srgb, var(--cor) 30%, transparent);
+}
+
+.jogo-card:active {
+  transform: scale(0.98);
+}
+
+/* Tile do ícone (emoji) */
+.jogo-icone {
+  flex-shrink: 0;
+  width: 62px;
+  height: 62px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  background: linear-gradient(150deg,
+              var(--cor),
+              color-mix(in srgb, var(--cor) 55%, #000));
+  box-shadow: 0 8px 20px color-mix(in srgb, var(--cor) 35%, transparent),
+              inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+/* Textos do card */
+.jogo-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.jogo-nome {
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin-bottom: 3px;
+}
+
+.jogo-desc {
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--texto-dim);
+  margin-bottom: 9px;
+}
+
+.jogo-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.pill {
+  font-size: 11.5px;
+  font-weight: 600;
+  padding: 4px 9px;
+  border-radius: 20px;
+  background: color-mix(in srgb, var(--cor) 16%, transparent);
+  color: color-mix(in srgb, var(--cor) 75%, #fff);
+  white-space: nowrap;
+}
+
+/* Seta indicando "toque" */
+.jogo-seta {
+  flex-shrink: 0;
+  font-size: 26px;
+  line-height: 1;
+  color: var(--texto-fraco);
+  transition: transform 0.16s ease, color 0.2s ease;
+}
+
+.jogo-card:hover .jogo-seta {
+  color: var(--cor);
+  transform: translateX(3px);
+}
+
+/* Estado vazio (nenhum jogo cadastrado) */
+.vazio {
+  text-align: center;
+  color: var(--texto-dim);
+  padding: 40px 20px;
+  border: 1px dashed var(--linha);
+  border-radius: var(--raio);
+  font-size: 14px;
+}
+
+/* ================= RODAPÉ ================= */
+.rodape {
+  text-align: center;
+  margin-top: 26px;
+  font-size: 12.5px;
+  color: var(--texto-fraco);
+}
+
+/* ================= ANIMAÇÕES ================= */
+@keyframes surgir {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
+
+/* Telas bem pequenas */
+@media (max-width: 360px) {
+  .logo { font-size: 54px; }
+  .jogo-icone { width: 54px; height: 54px; font-size: 28px; }
+}

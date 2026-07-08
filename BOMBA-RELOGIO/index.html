@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bomba-Relógio Etílica</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+
+    <!-- ================= TELA DE MENU ================= -->
+    <div class="container tela" id="tela-menu">
+        <a href="../index.html" class="link-hub">← Game Night</a>
+        <h1>💣 Bomba de Categorias</h1>
+        <p class="subtitulo">Escolha um tópico para jogar</p>
+
+        <!-- Botão do modo aleatório -->
+        <button id="btn-aleatorio" class="btn-aleatorio">🎲 MODO ALEATÓRIO<br><span>Cai qualquer categoria!</span></button>
+
+        <p class="ou">— ou escolha um tópico —</p>
+
+        <!-- Grade de tópicos (preenchida automaticamente pelo JS) -->
+        <div id="grade-topicos" class="grade-topicos"></div>
+    </div>
+
+    <!-- ================= TELA DO JOGO ================= -->
+    <div class="container tela escondido" id="tela-jogo">
+        <button id="btn-voltar" class="btn-voltar">← Voltar ao menu</button>
+
+        <h1 id="titulo-topico">Bomba de Categorias</h1>
+
+        <div id="categoria-box">
+            <div id="categoria-grupo"></div>
+            <div id="categoria-texto">Toque em Iniciar para Jogar!</div>
+        </div>
+
+        <div id="bomba-visual">💣</div>
+
+        <div id="punicao-box"></div>
+
+        <button id="btn-acao">INICIAR JOGO</button>
+    </div>
+
+    <!-- Banco de categorias (edite este arquivo para adicionar mais) -->
+    <script src="categorias.js"></script>
+    <!-- Lógica do jogo -->
+    <script src="jogo.js"></script>
+</body>
+</html>
