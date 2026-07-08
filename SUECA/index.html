@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sueca</title>
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+
+    <div class="container">
+
+        <!-- Link de volta para o hub Game Night -->
+        <a href="../index.html" class="link-hub">← Game Night</a>
+
+        <!-- Cabeçalho -->
+        <header>
+            <h1>♠ Sueca ♥</h1>
+            <p class="subtitulo">Sorteie uma carta e cumpra a regra</p>
+        </header>
+
+        <!-- Contador de cartas restantes -->
+        <div class="contador" id="contador">52 cartas no baralho</div>
+
+        <!-- ================= CARTA ================= -->
+        <!-- .carta é o "palco" 3D; .carta-inner é quem gira -->
+        <div class="carta" id="carta">
+            <div class="carta-inner" id="carta-inner">
+
+                <!-- Verso (visível antes do sorteio) -->
+                <div class="carta-face carta-verso">
+                    <div class="verso-moldura">
+                        <span class="verso-ornamento">♛</span>
+                    </div>
+                </div>
+
+                <!-- Frente (revelada após o flip) -->
+                <div class="carta-face carta-frente">
+                    <div class="canto canto-topo">
+                        <span class="canto-valor" id="canto-valor-topo"></span>
+                        <span class="canto-naipe" id="canto-naipe-topo"></span>
+                    </div>
+                    <div class="naipe-central" id="naipe-central"></div>
+                    <div class="canto canto-base">
+                        <span class="canto-valor" id="canto-valor-base"></span>
+                        <span class="canto-naipe" id="canto-naipe-base"></span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Regra da carta sorteada -->
+        <div class="regra" id="regra">
+            <p class="regra-texto" id="regra-texto">Toque no botão para começar</p>
+        </div>
+
+        <!-- Botão de sorteio (vira "Embaralhar Novamente" ao fim do baralho) -->
+        <button class="btn-sortear" id="btn-sortear">Sortear Carta</button>
+
+        <!-- Histórico das últimas 5 cartas -->
+        <div class="historico">
+            <p class="historico-titulo">Últimas cartas</p>
+            <div class="historico-lista" id="historico-lista">
+                <span class="historico-vazio">Nenhuma carta sorteada ainda</span>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="js/jogo.js"></script>
+</body>
+</html>

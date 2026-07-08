@@ -30,6 +30,14 @@ const JOGOS = [
     jogadores: "3+ jogadores",
     cor: "#E7C15C",
     link: "IMPOSTOR/index.html"
+  },
+  {
+    emoji: "🃏",
+    nome: "Sueca",
+    descricao: "Sorteie uma carta do baralho e cumpra a regra. Sem repetição!",
+    jogadores: "2+ jogadores",
+    cor: "#C62839",
+    link: "SUECA/index.html"
   }
 
   // 👉 Novo jogo? Adicione uma vírgula acima e cole um bloco aqui.
