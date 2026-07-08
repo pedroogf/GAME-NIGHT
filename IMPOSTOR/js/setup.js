@@ -4,6 +4,7 @@ function selectMode(mode){
   state.mode = mode;
   state.numPlayers = mode === 'dupla' ? 5 : 3;
   state.numImpostors = 1;
+  state.hintsEnabled = true;
   state.selectedCategories = [];
 
 
@@ -14,8 +15,17 @@ function selectMode(mode){
   renderCategoryGrid();
   document.getElementById('players-val').textContent = state.numPlayers;
   document.getElementById('impostors-val').textContent = state.numImpostors;
+  document.getElementById('hint-chip-on').classList.add('on');
+  document.getElementById('hint-chip-off').classList.remove('on');
   validateSetup();
   goToScreen('screen-setup');
+}
+
+
+function setHintsEnabled(enabled){
+  state.hintsEnabled = enabled;
+  document.getElementById('hint-chip-on').classList.toggle('on', enabled);
+  document.getElementById('hint-chip-off').classList.toggle('on', !enabled);
 }
 
 

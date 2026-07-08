@@ -39,7 +39,7 @@ function assignRound(){
       state.assignments[id] = { role:'normal', word: chosen.word, hint:null, pairId:null };
     });
     impostorIds.forEach(id=>{
-      state.assignments[id] = { role:'impostor', word:null, hint: chosen.hint, pairId:null };
+      state.assignments[id] = { role:'impostor', word:null, hint: state.hintsEnabled ? chosen.hint : null, pairId:null };
     });
   } else {
     // Modo Dupla
@@ -62,7 +62,7 @@ function assignRound(){
 
     impostorIds.forEach(id=>{
       const target = pick(chosenEntries);
-      state.assignments[id] = { role:'impostor', word:null, hint: target.hint, pairId:null };
+      state.assignments[id] = { role:'impostor', word:null, hint: state.hintsEnabled ? target.hint : null, pairId:null };
     });
   }
 }
@@ -116,7 +116,9 @@ function showPassScreenFor(idx){
     backEl.classList.add('is-impostor');
     roleEl.textContent = 'Você é o IMPOSTOR';
     wordEl.textContent = '???';
-    hintEl.innerHTML = 'Sua dica:<br><strong style="color:var(--text); font-size: 16.5px;">"' + a.hint + '"</strong>';
+    hintEl.innerHTML = a.hint
+      ? 'Sua dica:<br><strong style="color:var(--text); font-size: 16.5px;">"' + a.hint + '"</strong>'
+      : 'Você não recebeu nenhuma dica desta vez!';
     remEl.textContent = state.mode === 'dupla'
       ? 'Fique atento ao papo dos outros e tente se infiltrar numa dupla!'
       : 'Sua missão: Use a dica e tente se disfarçar e blefar na hora do debate!';
@@ -231,7 +233,7 @@ function finishGame(){
           <div class="rr-name">${p.name}</div>
           <div class="rr-role">${a.role==='impostor' ? '🎭 Impostor' : 'Jogador'}</div>
         </div>
-        <div class="rr-detail">${a.role==='impostor' ? 'A dica rápida que recebeu foi:<br><strong style="color:var(--gold)">"' + a.hint + '"</strong>' : 'Palavra secreta: <strong style="color:var(--gold)">' + a.word + '</strong>'}</div>
+        <div class="rr-detail">${a.role==='impostor' ? (a.hint ? 'A dica rápida que recebeu foi:<br><strong style="color:var(--gold)">"' + a.hint + '"</strong>' : 'Não recebeu nenhuma dica.') : 'Palavra secreta: <strong style="color:var(--gold)">' + a.word + '</strong>'}</div>
       `;
       list.appendChild(row);
     });
@@ -269,7 +271,7 @@ function finishGame(){
             <div class="rr-name">${p.name}</div>
             <div class="rr-role">🎭 Impostor</div>
           </div>
-          <div class="rr-detail">A dica recebida foi:<br><strong style="color:var(--red)">"${a.hint}"</strong></div>
+          <div class="rr-detail">${a.hint ? 'A dica recebida foi:<br><strong style="color:var(--red)">"' + a.hint + '"</strong>' : 'Não recebeu nenhuma dica.'}</div>
         `;
       } else {
         row.className = 'reveal-row';
@@ -297,7 +299,7 @@ function newRoundSamePlayers(){
 
 function restartFull(){
   state = {
-    mode: null, numPlayers:5, numImpostors:1, selectedCategories:[],
+    mode: null, numPlayers:5, numImpostors:1, hintsEnabled:true, selectedCategories:[],
     players:[], assignments:{}, passOrder:[], passIndex:0, pairs:[]
   };
   goToScreen('screen-mode');

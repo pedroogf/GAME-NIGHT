@@ -3,6 +3,7 @@ let state = {
   mode: null,
   numPlayers: 5,
   numImpostors: 1,
+  hintsEnabled: true,
   selectedCategories: [],
   players: [],       // [{id, name}]
   assignments: {},   // id -> {role:'normal'|'impostor', word, hint, pairId}
