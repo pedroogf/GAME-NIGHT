@@ -53,7 +53,7 @@ const JOGOS = [
     descricao: "Perguntas curiosas de números: quem chutar mais perto vence!",
     jogadores: "2+ jogadores",
     cor: "#4EA8FF",
-    link: "chuta-ai/index.html"
+    link: "CHUTA-AI/index.html"
   }
 
   // 👉 Novo jogo? Adicione uma vírgula acima e cole um bloco aqui.
