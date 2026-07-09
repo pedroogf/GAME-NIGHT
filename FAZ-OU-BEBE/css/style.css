@@ -1,0 +1,640 @@
+/* ============================================================
+   FAZ OU BEBE — estilo
+   ------------------------------------------------------------
+   Mobile-first. Tema escuro por padrão; o body recebe
+   .tema-claro para o modo claro e .sem-animacao para
+   desligar todas as animações.
+   ============================================================ */
+
+:root {
+  --fundo: #0F172A;
+  --fundo-2: #1E293B;
+  --fundo-3: #273449;
+  --borda: #334155;
+  --texto: #F8FAFC;
+  --texto-suave: #94A3B8;
+  --primaria: #F97316;
+  --primaria-forte: #EA580C;
+  --verde: #22C55E;
+  --vermelho: #EF4444;
+  --sombra: rgba(0, 0, 0, .45);
+}
+
+body.tema-claro {
+  --fundo: #F1F5F9;
+  --fundo-2: #FFFFFF;
+  --fundo-3: #E2E8F0;
+  --borda: #CBD5E1;
+  --texto: #0F172A;
+  --texto-suave: #64748B;
+  --sombra: rgba(15, 23, 42, .15);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+html, body { height: 100%; }
+
+body {
+  background: var(--fundo);
+  color: var(--texto);
+  font-family: "Inter", system-ui, sans-serif;
+  overflow-x: hidden;
+  transition: background .3s, color .3s;
+}
+
+/* Desliga TODAS as animações e transições */
+body.sem-animacao *, body.sem-animacao *::before, body.sem-animacao *::after {
+  animation: none !important;
+  transition: none !important;
+}
+
+#app {
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100dvh;
+  padding: 16px 20px calc(24px + env(safe-area-inset-bottom));
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---------- TELAS ---------- */
+
+.screen {
+  display: none;
+  flex-direction: column;
+  flex: 1;
+  animation: entrar .35s ease both;
+}
+.screen.active { display: flex; }
+
+@keyframes entrar {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.spacer { flex: 1; }
+
+/* ---------- TIPOGRAFIA ---------- */
+
+.display {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: clamp(42px, 12vw, 58px);
+  letter-spacing: 2px;
+  line-height: 1;
+}
+
+.eyebrow {
+  color: var(--primaria);
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 6px;
+}
+
+.sub { color: var(--texto-suave); font-size: 15px; margin-top: 10px; line-height: 1.5; }
+
+.footnote {
+  color: var(--texto-suave);
+  font-size: 12px;
+  text-align: center;
+  margin-top: 18px;
+}
+
+/* ---------- NAVEGAÇÃO ---------- */
+
+.top-nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 22px; min-height: 28px; }
+
+.back-link {
+  color: var(--texto-suave);
+  background: none;
+  border: none;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  padding: 4px 0;
+}
+.back-link:active { color: var(--primaria); }
+
+/* ---------- BOTÕES ---------- */
+
+.btn-primario, .btn-secundario, .btn-perigo {
+  width: 100%;
+  border: none;
+  border-radius: 16px;
+  padding: 17px;
+  font: inherit;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform .12s, filter .12s;
+}
+.btn-primario:active, .btn-secundario:active, .btn-perigo:active { transform: scale(.97); filter: brightness(1.1); }
+
+.btn-primario {
+  background: linear-gradient(135deg, var(--primaria), var(--primaria-forte));
+  color: #fff;
+  box-shadow: 0 8px 24px rgba(249, 115, 22, .35);
+}
+
+.btn-secundario {
+  background: var(--fundo-2);
+  color: var(--texto);
+  border: 1px solid var(--borda);
+}
+
+.btn-perigo { background: var(--vermelho); color: #fff; }
+
+/* ---------- TELA INICIAL ---------- */
+
+.logo-area { text-align: center; margin: auto 0; padding: 30px 0; }
+
+.logo-emoji {
+  font-size: 72px;
+  margin-bottom: 12px;
+  animation: flutuar 3s ease-in-out infinite;
+}
+
+@keyframes flutuar {
+  0%, 100% { transform: translateY(0) rotate(-4deg); }
+  50%      { transform: translateY(-10px) rotate(4deg); }
+}
+
+.menu-botoes { display: flex; flex-direction: column; gap: 12px; }
+
+/* ---------- COMO FUNCIONA ---------- */
+
+.regras { display: flex; flex-direction: column; gap: 14px; margin-top: 20px; }
+
+.regra {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  background: var(--fundo-2);
+  border: 1px solid var(--borda);
+  border-radius: 16px;
+  padding: 14px 16px;
+}
+.regra p { font-size: 14px; line-height: 1.55; color: var(--texto-suave); }
+.regra strong { color: var(--texto); }
+
+.regra-num {
+  flex: 0 0 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--primaria);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ---------- CONFIGURAÇÕES ---------- */
+
+.config-lista { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
+
+.config-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: var(--fundo-2);
+  border: 1px solid var(--borda);
+  border-radius: 16px;
+  padding: 14px 16px;
+  font: inherit;
+  color: var(--texto);
+  cursor: pointer;
+  text-align: left;
+}
+
+.config-texto { display: flex; flex-direction: column; gap: 2px; }
+.config-texto strong { font-size: 15px; }
+.config-texto small { color: var(--texto-suave); font-size: 12px; }
+
+.switch {
+  flex: 0 0 48px;
+  height: 28px;
+  border-radius: 99px;
+  background: var(--fundo-3);
+  border: 1px solid var(--borda);
+  position: relative;
+  transition: background .2s;
+}
+.switch .bolinha {
+  position: absolute;
+  top: 3px; left: 3px;
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: var(--texto-suave);
+  transition: transform .2s, background .2s;
+}
+.switch.on { background: var(--verde); border-color: var(--verde); }
+.switch.on .bolinha { transform: translateX(20px); background: #fff; }
+
+/* ---------- SETUP: JOGADORES ---------- */
+
+.field { margin-top: 22px; }
+.field label { display: block; font-size: 14px; font-weight: 700; margin-bottom: 10px; }
+.field-dica { color: var(--texto-suave); font-size: 12px; margin-top: 8px; text-align: center; }
+
+.stepper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--fundo-2);
+  border: 1px solid var(--borda);
+  border-radius: 16px;
+  overflow: hidden;
+}
+.stepper button {
+  width: 64px; height: 60px;
+  background: none;
+  border: none;
+  color: var(--primaria);
+  font-size: 28px;
+  font-weight: 800;
+  cursor: pointer;
+}
+.stepper button:active { background: var(--fundo-3); }
+.stepper .val { font-size: 26px; font-weight: 800; }
+
+.chips-duo { display: flex; gap: 10px; }
+
+.chip {
+  flex: 1;
+  padding: 13px;
+  border-radius: 14px;
+  background: var(--fundo-2);
+  border: 1px solid var(--borda);
+  color: var(--texto-suave);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all .15s;
+}
+.chip.on {
+  background: rgba(249, 115, 22, .14);
+  border-color: var(--primaria);
+  color: var(--primaria);
+}
+
+.lista-nomes { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
+
+.lista-nomes input {
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: var(--fundo-2);
+  border: 1px solid var(--borda);
+  color: var(--texto);
+  font: inherit;
+  font-size: 15px;
+  outline: none;
+}
+.lista-nomes input:focus { border-color: var(--primaria); }
+
+.oculto { display: none !important; }
+
+/* ---------- MODO DE JOGO ---------- */
+
+.mode-cards { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; }
+
+.mode-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--fundo-2);
+  border: 1px solid var(--borda);
+  border-radius: 18px;
+  padding: 16px;
+  font: inherit;
+  color: var(--texto);
+  text-align: left;
+  cursor: pointer;
+  transition: transform .12s, border-color .12s;
+}
+.mode-card:active { transform: scale(.98); border-color: var(--primaria); }
+
+.m-icon { font-size: 30px; }
+.m-body { flex: 1; display: flex; flex-direction: column; gap: 3px; }
+.m-title { font-size: 17px; font-weight: 800; }
+.m-desc { font-size: 13px; color: var(--texto-suave); line-height: 1.45; }
+.m-arrow { color: var(--texto-suave); font-size: 22px; }
+
+/* ---------- JOGO ---------- */
+
+.jogo-nav { margin-bottom: 8px; }
+
+.contador {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--texto-suave);
+  background: var(--fundo-2);
+  border: 1px solid var(--borda);
+  border-radius: 99px;
+  padding: 6px 12px;
+}
+
+.eventos-ativos { display: flex; flex-wrap: wrap; gap: 6px; min-height: 4px; margin-bottom: 8px; }
+
+.evento-chip {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--primaria);
+  background: rgba(249, 115, 22, .12);
+  border: 1px solid rgba(249, 115, 22, .4);
+  border-radius: 99px;
+  padding: 5px 10px;
+  cursor: pointer;
+  animation: entrar .3s ease both;
+}
+
+.vez-area { text-align: center; margin: 6px 0 14px; }
+
+.vez-nome {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: clamp(34px, 10vw, 46px);
+  letter-spacing: 1.5px;
+  line-height: 1.05;
+  word-break: break-word;
+}
+
+/* ---------- CARTA (flip 3D) ---------- */
+
+.carta-area { perspective: 1200px; flex: 1; display: flex; min-height: 340px; }
+
+.carta {
+  position: relative;
+  width: 100%;
+  max-width: 340px;
+  margin: 0 auto;
+  min-height: 340px;
+  cursor: pointer;
+  transform-style: preserve-3d;
+  transition: transform .55s cubic-bezier(.4, .1, .2, 1);
+}
+.carta.virada { transform: rotateY(180deg); }
+
+/* Sem animação: o flip vira troca instantânea de face */
+body.sem-animacao .carta { transform-style: flat; }
+body.sem-animacao .carta .carta-frente { display: flex; }
+body.sem-animacao .carta.virada .carta-frente { display: none; }
+body.sem-animacao .carta .carta-verso { display: none; }
+body.sem-animacao .carta.virada .carta-verso { display: flex; transform: none; }
+
+.carta-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  box-shadow: 0 18px 40px var(--sombra);
+}
+
+.carta-frente {
+  background:
+    radial-gradient(circle at 30% 20%, rgba(249, 115, 22, .25), transparent 55%),
+    radial-gradient(circle at 75% 85%, rgba(249, 115, 22, .18), transparent 50%),
+    var(--fundo-2);
+  border: 2px solid var(--primaria);
+  gap: 10px;
+}
+
+.carta-logo { font-size: 40px; }
+
+.carta-interrogacao {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 110px;
+  color: var(--primaria);
+  line-height: 1;
+  text-shadow: 0 6px 30px rgba(249, 115, 22, .45);
+  animation: pulsar 1.8s ease-in-out infinite;
+}
+
+@keyframes pulsar {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.07); }
+}
+
+.carta-marca {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 16px;
+  letter-spacing: 4px;
+  color: var(--texto-suave);
+}
+
+.carta-verso {
+  background: var(--fundo-2);
+  border: 1px solid var(--borda);
+  transform: rotateY(180deg);
+  justify-content: flex-start;
+  text-align: center;
+  gap: 12px;
+}
+
+.carta-topo { display: flex; align-items: center; justify-content: space-between; width: 100%; }
+
+.carta-categoria {
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--texto-suave);
+  background: var(--fundo-3);
+  border-radius: 99px;
+  padding: 5px 11px;
+}
+
+.carta-modo {
+  font-size: 11px;
+  font-weight: 800;
+  border-radius: 99px;
+  padding: 5px 11px;
+}
+.carta-modo.resenha { color: var(--verde); background: rgba(34, 197, 94, .12); }
+.carta-modo.pesado  { color: var(--vermelho); background: rgba(239, 68, 68, .12); }
+
+.carta-titulo {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 30px;
+  letter-spacing: 1.5px;
+  margin-top: 8px;
+}
+
+.carta-descricao {
+  font-size: 16px;
+  line-height: 1.55;
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.carta-ou {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  color: var(--texto-suave);
+}
+
+.carta-goles {
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--primaria);
+  background: rgba(249, 115, 22, .12);
+  border: 1px solid rgba(249, 115, 22, .4);
+  border-radius: 14px;
+  padding: 12px 22px;
+}
+
+.dica-toque {
+  text-align: center;
+  color: var(--texto-suave);
+  font-size: 14px;
+  margin: 16px 0;
+  animation: pulsar 1.8s ease-in-out infinite;
+}
+
+.acoes-reveladas { display: flex; flex-direction: column; gap: 10px; margin-top: 16px; }
+.acoes-duo { display: flex; gap: 10px; }
+.acoes-duo .btn-secundario { font-size: 14px; padding: 14px 8px; }
+
+/* ---------- OVERLAYS E MODAIS ---------- */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(2, 6, 23, .75);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .25s;
+  z-index: 50;
+}
+.overlay.aberto { opacity: 1; pointer-events: auto; }
+
+.modal-caixa, .especial-carta {
+  width: 100%;
+  max-width: 360px;
+  background: var(--fundo-2);
+  border: 1px solid var(--borda);
+  border-radius: 22px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  text-align: center;
+  transform: scale(.92);
+  transition: transform .25s;
+}
+.overlay.aberto .modal-caixa, .overlay.aberto .especial-carta { transform: scale(1); }
+
+.modal-caixa h3 { font-size: 19px; }
+.modal-texto { color: var(--texto-suave); font-size: 14px; }
+
+.lista-troca {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 45vh;
+  overflow-y: auto;
+}
+
+.btn-jogador {
+  padding: 13px;
+  border-radius: 12px;
+  background: var(--fundo-3);
+  border: 1px solid var(--borda);
+  color: var(--texto);
+  font: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.btn-jogador.atual { border-color: var(--primaria); color: var(--primaria); font-weight: 800; }
+.btn-jogador:active { transform: scale(.97); }
+
+/* ---------- CARTA ESPECIAL ---------- */
+
+.especial-carta {
+  border: 2px solid var(--primaria);
+  box-shadow: 0 0 60px rgba(249, 115, 22, .35);
+}
+
+.especial-tag {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: var(--primaria);
+}
+
+.especial-carta h3 {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 34px;
+  letter-spacing: 1.5px;
+}
+
+.especial-carta p { font-size: 15px; line-height: 1.55; color: var(--texto); }
+
+.especial-duracao {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--texto-suave);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.tremer { animation: tremer .5s ease; }
+
+@keyframes tremer {
+  0%, 100% { transform: scale(1) rotate(0); }
+  20% { transform: scale(1.03) rotate(-2deg); }
+  40% { transform: scale(1.03) rotate(2deg); }
+  60% { transform: scale(1.02) rotate(-1.5deg); }
+  80% { transform: scale(1.02) rotate(1.5deg); }
+}
+
+/* ---------- TOAST ---------- */
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: calc(28px + env(safe-area-inset-bottom));
+  transform: translateX(-50%) translateY(20px);
+  max-width: min(420px, calc(100vw - 40px));
+  background: var(--fundo-3);
+  color: var(--texto);
+  border: 1px solid var(--borda);
+  border-radius: 14px;
+  padding: 12px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+  box-shadow: 0 10px 30px var(--sombra);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .3s, transform .3s;
+  z-index: 99;
+}
+.toast.visivel { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ---------- TELAS MAIORES ---------- */
+
+@media (min-width: 768px) {
+  #app { padding-top: 40px; }
+  .carta { max-width: 380px; min-height: 400px; }
+}

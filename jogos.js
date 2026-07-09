@@ -54,6 +54,14 @@ const JOGOS = [
     jogadores: "2+ jogadores",
     cor: "#4EA8FF",
     link: "CHUTA-AI/index.html"
+  },
+  {
+    emoji: "🍻",
+    nome: "Faz ou Bebe",
+    descricao: "Tire uma carta e escolha: encara o desafio ou bebe os goles!",
+    jogadores: "2+ jogadores",
+    cor: "#F97316",
+    link: "FAZ-OU-BEBE/index.html"
   }
 
   // 👉 Novo jogo? Adicione uma vírgula acima e cole um bloco aqui.

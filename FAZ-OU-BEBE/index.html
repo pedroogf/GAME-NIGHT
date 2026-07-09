@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#0F172A">
+<title>Faz ou Bebe — Jogo de Festa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div id="app">
+
+  <!-- ================= TELA INICIAL ================= -->
+  <div class="screen active" id="tela-inicio">
+    <div class="top-nav">
+      <a class="back-link" href="../index.html">‹ Game Night</a>
+    </div>
+    <div class="logo-area">
+      <div class="logo-emoji">🍻</div>
+      <h1 class="display">FAZ OU BEBE</h1>
+      <p class="sub">Tire uma carta. Encare o desafio<br>ou pague em goles.</p>
+    </div>
+    <div class="menu-botoes">
+      <button class="btn-primario" onclick="abrirTela('tela-jogadores')">Jogar</button>
+      <button class="btn-secundario" onclick="abrirTela('tela-comofunciona')">Como funciona</button>
+      <button class="btn-secundario" onclick="abrirTela('tela-config')">Configurações</button>
+    </div>
+    <p class="footnote">Beba com responsabilidade. Água também é bebida. 💧</p>
+  </div>
+
+  <!-- ================= COMO FUNCIONA ================= -->
+  <div class="screen" id="tela-comofunciona">
+    <div class="top-nav">
+      <button class="back-link" onclick="voltarInicio()">‹ Voltar</button>
+    </div>
+    <div class="eyebrow">Regras</div>
+    <h2 class="display">Como funciona</h2>
+    <div class="regras">
+      <div class="regra"><span class="regra-num">1</span><p>Um celular só, passado de mão em mão. Na sua vez, <strong>toque na carta</strong> para virar.</p></div>
+      <div class="regra"><span class="regra-num">2</span><p>A carta traz um desafio. Você decide: <strong>✅ faz</strong> o desafio ou <strong>🍻 bebe</strong> os goles indicados.</p></div>
+      <div class="regra"><span class="regra-num">3</span><p>O grupo julga se o desafio foi cumprido. A palavra da mesa é final. 😄</p></div>
+      <div class="regra"><span class="regra-num">4</span><p>De vez em quando aparece uma <strong>⚡ carta especial</strong> com um evento extra: todos bebem, regra do silêncio, inversão da roda...</p></div>
+      <div class="regra"><span class="regra-num">5</span><p>As cartas <strong>nunca se repetem</strong> na mesma partida. O baralho só é reembaralhado quando todas forem usadas.</p></div>
+    </div>
+    <div class="spacer"></div>
+    <button class="btn-primario" onclick="abrirTela('tela-jogadores')">Bora jogar</button>
+  </div>
+
+  <!-- ================= CONFIGURAÇÕES ================= -->
+  <div class="screen" id="tela-config">
+    <div class="top-nav">
+      <button class="back-link" onclick="voltarInicio()">‹ Voltar</button>
+    </div>
+    <div class="eyebrow">Ajustes</div>
+    <h2 class="display">Configurações</h2>
+    <div class="config-lista">
+      <button class="config-item" onclick="alternarConfig('sons')">
+        <span class="config-texto"><strong>Sons</strong><small>Flip, cliques e efeitos</small></span>
+        <span class="switch" id="sw-sons"><span class="bolinha"></span></span>
+      </button>
+      <button class="config-item" onclick="alternarConfig('animacoes')">
+        <span class="config-texto"><strong>Animações</strong><small>Transições e flip da carta</small></span>
+        <span class="switch" id="sw-animacoes"><span class="bolinha"></span></span>
+      </button>
+      <button class="config-item" onclick="alternarConfig('temaClaro')">
+        <span class="config-texto"><strong>Modo claro</strong><small>O padrão é o modo escuro</small></span>
+        <span class="switch" id="sw-tema"><span class="bolinha"></span></span>
+      </button>
+      <button class="config-item" onclick="alternarConfig('semPesado')">
+        <span class="config-texto"><strong>Remover cartas pesadas</strong><small>Vale para a próxima partida</small></span>
+        <span class="switch" id="sw-pesado"><span class="bolinha"></span></span>
+      </button>
+      <button class="config-item" onclick="alternarConfig('mostrarRestantes')">
+        <span class="config-texto"><strong>Cartas restantes</strong><small>Mostra o contador durante o jogo</small></span>
+        <span class="switch" id="sw-contador"><span class="bolinha"></span></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ================= JOGADORES ================= -->
+  <div class="screen" id="tela-jogadores">
+    <div class="top-nav">
+      <button class="back-link" onclick="voltarInicio()">‹ Voltar</button>
+    </div>
+    <div class="eyebrow">Configuração</div>
+    <h2 class="display">Quem vai jogar?</h2>
+
+    <div class="field">
+      <label>Quantos jogadores?</label>
+      <div class="stepper">
+        <button onclick="mudarQtd(-1)">−</button>
+        <div class="val" id="qtd-valor">4</div>
+        <button onclick="mudarQtd(1)">+</button>
+      </div>
+      <p class="field-dica">De 2 a 20 jogadores</p>
+    </div>
+
+    <div class="field">
+      <label>Nomes</label>
+      <div class="chips-duo">
+        <button class="chip on" id="chip-auto" onclick="definirNomesAuto(true)">Automáticos</button>
+        <button class="chip" id="chip-manual" onclick="definirNomesAuto(false)">Personalizar</button>
+      </div>
+      <div class="lista-nomes oculto" id="lista-nomes"></div>
+    </div>
+
+    <div class="spacer"></div>
+    <button class="btn-primario" onclick="confirmarJogadores()">Continuar</button>
+  </div>
+
+  <!-- ================= MODO DE JOGO ================= -->
+  <div class="screen" id="tela-modo">
+    <div class="top-nav">
+      <button class="back-link" onclick="abrirTela('tela-jogadores')">‹ Voltar</button>
+    </div>
+    <div class="eyebrow">Última etapa</div>
+    <h2 class="display">Escolha o modo</h2>
+    <div class="mode-cards">
+      <button class="mode-card" onclick="escolherModo('resenha')">
+        <span class="m-icon">🍺</span>
+        <span class="m-body">
+          <span class="m-title">Resenha</span>
+          <span class="m-desc">Leve e divertido. Desafios descontraídos para qualquer grupo, sem constrangimento pesado.</span>
+        </span>
+        <span class="m-arrow">›</span>
+      </button>
+      <button class="mode-card" onclick="escolherModo('pesado')">
+        <span class="m-icon">🔥</span>
+        <span class="m-body">
+          <span class="m-title">Pesado</span>
+          <span class="m-desc">Ousado. Mensagens, ligações, confissões e vergonha na medida. Só para grupos corajosos.</span>
+        </span>
+        <span class="m-arrow">›</span>
+      </button>
+      <button class="mode-card" onclick="escolherModo('aleatorio')">
+        <span class="m-icon">🎲</span>
+        <span class="m-body">
+          <span class="m-title">Aleatório</span>
+          <span class="m-desc">Mistura os dois modos. Nunca se sabe o que vem: pode ser leve, pode ser pesado.</span>
+        </span>
+        <span class="m-arrow">›</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ================= JOGO ================= -->
+  <div class="screen" id="tela-jogo">
+    <div class="top-nav jogo-nav">
+      <button class="back-link" onclick="sairPartida()">‹ Sair</button>
+      <div class="contador oculto" id="contador-cartas"></div>
+    </div>
+
+    <div class="eventos-ativos" id="eventos-ativos"></div>
+
+    <div class="vez-area">
+      <div class="eyebrow">É a vez de</div>
+      <div class="vez-nome" id="vez-nome">Jogador 1</div>
+    </div>
+
+    <!-- Carta com flip: frente (fechada) e verso (revelada) -->
+    <div class="carta-area">
+      <div class="carta" id="carta" onclick="tocarCarta()">
+        <div class="carta-face carta-frente">
+          <div class="carta-logo">🍻</div>
+          <div class="carta-interrogacao">?</div>
+          <div class="carta-marca">FAZ OU BEBE</div>
+        </div>
+        <div class="carta-face carta-verso">
+          <div class="carta-topo">
+            <span class="carta-categoria" id="carta-categoria">Categoria</span>
+            <span class="carta-modo resenha" id="carta-modo">🍺 Resenha</span>
+          </div>
+          <h3 class="carta-titulo" id="carta-titulo">Título</h3>
+          <p class="carta-descricao" id="carta-descricao">Descrição do desafio.</p>
+          <div class="carta-ou">— OU —</div>
+          <div class="carta-goles" id="carta-goles">Beba 3 goles</div>
+        </div>
+      </div>
+    </div>
+
+    <p class="dica-toque" id="dica-toque">Toque na carta para revelar 👆</p>
+
+    <div class="acoes-reveladas oculto" id="acoes-reveladas">
+      <button class="btn-primario" onclick="proximaCarta()">Próxima carta ›</button>
+      <div class="acoes-duo">
+        <button class="btn-secundario" onclick="cartaAleatoria()">🎲 Carta aleatória</button>
+        <button class="btn-secundario" onclick="abrirTrocaJogador()">🔁 Trocar jogador</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ================= CARTA ESPECIAL (overlay) ================= -->
+<div class="overlay" id="overlay-especial">
+  <div class="especial-carta">
+    <div class="especial-tag">⚡ CARTA ESPECIAL</div>
+    <h3 id="especial-titulo">Título</h3>
+    <p id="especial-descricao">Descrição do evento.</p>
+    <div class="especial-duracao" id="especial-duracao">Efeito imediato</div>
+    <button class="btn-primario" onclick="fecharEspecial()">Entendido!</button>
+  </div>
+</div>
+
+<!-- ================= TROCAR JOGADOR (modal) ================= -->
+<div class="overlay" id="modal-troca" onclick="if(event.target===this)fecharModal('modal-troca')">
+  <div class="modal-caixa">
+    <h3>De quem é a vez?</h3>
+    <div class="lista-troca" id="lista-troca"></div>
+    <button class="btn-secundario" onclick="fecharModal('modal-troca')">Cancelar</button>
+  </div>
+</div>
+
+<!-- ================= SAIR DA PARTIDA (modal) ================= -->
+<div class="overlay" id="modal-sair" onclick="if(event.target===this)fecharModal('modal-sair')">
+  <div class="modal-caixa">
+    <h3>Encerrar a partida?</h3>
+    <p class="modal-texto">O progresso do baralho será perdido.</p>
+    <button class="btn-perigo" onclick="confirmarSaida()">Sim, sair</button>
+    <button class="btn-secundario" onclick="fecharModal('modal-sair')">Continuar jogando</button>
+  </div>
+</div>
+
+<!-- Aviso rápido -->
+<div class="toast" id="toast"></div>
+
+<script src="js/cards.js"></script>
+<script src="js/specialCards.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/animations.js"></script>
+<script src="js/game.js"></script>
+<script src="js/script.js"></script>
+</body>
+</html>
