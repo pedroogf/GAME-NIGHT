@@ -196,7 +196,7 @@ const CARDS = [
   { "id": 175, "modo": "resenha", "categoria": "Desafio rápido", "titulo": "Dez apelidos", "descricao": "Invente 10 apelidos carinhosos diferentes em 20 segundos, sem repetir nenhum.", "goles": 2, "peso": 1 },
   { "id": 176, "modo": "resenha", "categoria": "Desafio rápido", "titulo": "Malabarista", "descricao": "Jogue um objeto leve de uma mão para a outra 10 vezes sem deixar cair.", "goles": 1, "peso": 1 },
   { "id": 177, "modo": "resenha", "categoria": "Desafio rápido", "titulo": "Sem a letra A", "descricao": "Descreva o seu dia de hoje em três frases sem usar nenhuma palavra com a letra A.", "goles": 2, "peso": 1 },
-  { "id": 178, "modo": "resenha", "categoria": "Desafio rápido", "titulo": "Oito marcas", "descricao": "Cite 8 marcas de bebida em 10 segundos, sem repetir e sem inventar.", "goles": 2, "peso": 1 },
+  { "id": 178, "modo": "resenha", "categoria": "Desafio rápido", "titulo": "Marca registrada", "descricao": "Cite 8 marcas de bebida em 10 segundos, sem repetir e sem inventar.", "goles": 2, "peso": 1 },
   { "id": 179, "modo": "resenha", "categoria": "Desafio rápido", "titulo": "Aviãozinho", "descricao": "Dobre um avião de papel em 30 segundos e acerte um alvo que a mesa escolher.", "goles": 2, "peso": 1 },
   { "id": 180, "modo": "resenha", "categoria": "Desafio rápido", "titulo": "Assobio impossível", "descricao": "Assobie uma música até alguém da mesa reconhecer. Não sabe assobiar? Cantarole de boca fechada.", "goles": 2, "peso": 1 },
   { "id": 181, "modo": "resenha", "categoria": "Cronômetro", "titulo": "Minuto exato", "descricao": "Alguém cronometra: diga PARE quando achar que passou exatamente 1 minuto. Erro maior que 10 segundos, bebe.", "goles": 2, "peso": 1 },

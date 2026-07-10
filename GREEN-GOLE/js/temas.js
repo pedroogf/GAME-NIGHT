@@ -70,7 +70,6 @@ const TEMAS = {
       "Ficar 30 segundos sem piscar, encarando o juiz.",
       "Falar 'o rato roeu a roupa do rei de Roma' 3 vezes rápido sem errar.",
       "Dançar por 15 segundos sem música e sem rir.",
-      "Fazer a roda inteira rir em 20 segundos usando só mímica.",
       "Citar 5 marcas de cerveja em 8 segundos.",
       "Fazer uma declaração de amor dramática para o objeto mais próximo.",
       "Sustentar uma nota cantando 'aaaa' por 10 segundos sem falhar.",
@@ -84,8 +83,9 @@ const TEMAS = {
       "Falar por 20 segundos, sem pausar, sobre um assunto que a roda escolher.",
       "Girar 5 vezes no lugar e depois andar em linha reta.",
       "Dizer o nome completo de 3 pessoas da roda sem errar.",
-      "Soletrar 'otorrinolaringologista' sem errar.",
-      "Inventar uma rima na hora com o nome de alguém da roda."
+      "Soletrar 'otorrinolaringologista' sem errar em 15 segundos.",
+      "Ganhar uma batalha de rima com a pessoa a sua direita",
+      ""
     ]
   }
 
