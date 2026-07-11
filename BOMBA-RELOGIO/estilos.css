@@ -248,6 +248,25 @@ button:active {
     transform: scale(0.98);
 }
 
+/* ================= QUEM EXPLODIU (ranking) ================= */
+.quem-explodiu {
+    width: 100%;
+}
+
+.quem-rotulo {
+    color: #ffcc00;
+    font-weight: bold;
+    font-size: 0.95rem;
+    margin-bottom: 10px;
+}
+
+.quem-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+}
+
 /* ================= CHIPS DE RITMO ================= */
 .ritmo-box {
     display: flex;

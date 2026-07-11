@@ -100,6 +100,7 @@ function resetarTelaJogo() {
     jogoAtivo = false;
     clearTimeout(loopJogo);
     travarChipsRitmo(false);
+    document.getElementById('quem-explodiu').style.display = 'none';
     boxPunicao.style.display = 'none';
     bombaVisual.className = '';
     bombaVisual.innerText = '💣';
@@ -185,6 +186,7 @@ function gerenciarJogo() {
 function comecarRodada() {
     jogoAtivo = true;
     boxPunicao.style.display = 'none';
+    document.getElementById('quem-explodiu').style.display = 'none';
     btnAcao.style.opacity = '0.5';
     btnAcao.disabled = true;
     btnAcao.innerText = 'PASSE O CELULAR!';
@@ -283,6 +285,36 @@ function explodirBomba() {
     btnAcao.disabled = false;
     btnAcao.innerText = 'JOGAR NOVAMENTE';
     travarChipsRitmo(false);
+    mostrarQuemExplodiu();
+}
+
+// Se a mesa do Game Night tem gente, pergunta quem segurava a bomba
+// e desconta 1 ponto no ranking do azarado
+function mostrarQuemExplodiu() {
+    const box = document.getElementById('quem-explodiu');
+    const nomes = (typeof GameNight !== 'undefined') ? GameNight.jogadores() : [];
+    box.innerHTML = '';
+    if (nomes.length === 0) { box.style.display = 'none'; return; }
+
+    const rotulo = document.createElement('div');
+    rotulo.className = 'quem-rotulo';
+    rotulo.innerText = '💥 Quem tava segurando? (−1 ponto no ranking)';
+    box.appendChild(rotulo);
+
+    const linha = document.createElement('div');
+    linha.className = 'quem-chips';
+    nomes.forEach(function (nome) {
+        const chip = document.createElement('button');
+        chip.className = 'chip-ritmo';
+        chip.innerText = nome;
+        chip.addEventListener('click', function () {
+            GameNight.adicionarPontos('bomba', nome, -1);
+            box.innerHTML = '<div class="quem-rotulo">💥 ' + nome + ' levou −1 ponto no ranking!</div>';
+        });
+        linha.appendChild(chip);
+    });
+    box.appendChild(linha);
+    box.style.display = 'block';
 }
 
 /* ================= RITMO ================= */

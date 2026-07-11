@@ -85,6 +85,7 @@ function iniciarJogo(categoria) {
   textoPergunta.textContent = 'Toque em "Nova Pergunta" para começar!';
   painelResposta.classList.remove("visivel");
   btnResposta.disabled = true;
+  esconderQuemAcertou();
   fimBaralho.style.display = "none";
   btnNova.style.display = "";
   atualizarContador();
@@ -118,6 +119,7 @@ function novaPergunta() {
   textoPergunta.textContent = perguntaAtual.p;
   painelResposta.classList.remove("visivel");
   btnResposta.disabled = false;
+  esconderQuemAcertou();
 
   // Reinicia a animação de troca
   cartao.classList.remove("trocando");
@@ -133,6 +135,40 @@ function mostrarResposta() {
   textoCuriosidade.textContent = perguntaAtual.d;
   painelResposta.classList.add("visivel");
   btnResposta.disabled = true;
+  mostrarQuemAcertou();
+}
+
+// Se a mesa do Game Night tem gente, pergunta quem chegou mais perto
+// e dá +1 ponto no ranking
+function mostrarQuemAcertou() {
+  const box = document.getElementById("quem-acertou");
+  const nomes = (typeof GameNight !== "undefined") ? GameNight.jogadores() : [];
+  box.innerHTML = "";
+  if (nomes.length === 0) { box.style.display = "none"; return; }
+
+  const rotulo = document.createElement("p");
+  rotulo.className = "quem-rotulo";
+  rotulo.textContent = "🏅 Quem chegou mais perto? (+1 ponto)";
+  box.appendChild(rotulo);
+
+  const linha = document.createElement("div");
+  linha.className = "quem-chips";
+  nomes.forEach(nome => {
+    const chip = document.createElement("button");
+    chip.className = "chip-nome";
+    chip.textContent = nome;
+    chip.onclick = () => {
+      GameNight.adicionarPontos("chuta-ai", nome, 1);
+      box.innerHTML = '<p class="quem-rotulo">🏅 +1 ponto para ' + nome + '!</p>';
+    };
+    linha.appendChild(chip);
+  });
+  box.appendChild(linha);
+  box.style.display = "block";
+}
+
+function esconderQuemAcertou() {
+  document.getElementById("quem-acertou").style.display = "none";
 }
 
 function reiniciarBaralho() {

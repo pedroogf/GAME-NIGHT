@@ -60,6 +60,9 @@
                 </div>
             </div>
 
+            <!-- Quem chegou mais perto (alimenta o ranking do Game Night) -->
+            <div class="quem-acertou" id="quem-acertou" style="display:none;"></div>
+
             <div class="botoes">
                 <button class="btn-resposta" id="btn-resposta" onclick="mostrarResposta()" disabled>👀 Mostrar Resposta</button>
                 <button class="btn-nova" id="btn-nova" onclick="novaPergunta()">🎲 Nova Pergunta</button>
@@ -74,6 +77,7 @@
 
     </div>
 
+    <script src="../ranking.js"></script>
     <script src="js/perguntas.js"></script>
     <script src="js/jogo.js"></script>
 </body>

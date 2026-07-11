@@ -21,7 +21,8 @@ const JOGOS = [
     descricao: "Passe o celular e responda rápido antes que a bomba exploda!",
     jogadores: "3+ jogadores",
     cor: "#FF4D6D",
-    link: "BOMBA-RELOGIO/index.html"
+    link: "BOMBA-RELOGIO/index.html",
+    chave: "bomba"
   },
   {
     emoji: "🕵️",
@@ -29,7 +30,8 @@ const JOGOS = [
     descricao: "Todos sabem a palavra secreta — menos o impostor. Descubra quem é!",
     jogadores: "3+ jogadores",
     cor: "#E7C15C",
-    link: "IMPOSTOR/index.html"
+    link: "IMPOSTOR/index.html",
+    chave: "impostor"
   },
   {
     emoji: "🃏",
@@ -37,7 +39,8 @@ const JOGOS = [
     descricao: "Sorteie uma carta do baralho e cumpra a regra. Sem repetição!",
     jogadores: "2+ jogadores",
     cor: "#C62839",
-    link: "SUECA/index.html"
+    link: "SUECA/index.html",
+    chave: "sueca"
   },
   {
     emoji: "💸",
@@ -45,7 +48,8 @@ const JOGOS = [
     descricao: "Aposte nos desafios da roda: deu green ou alguém bebe!",
     jogadores: "3+ jogadores",
     cor: "#22E584",
-    link: "GREEN-GOLE/index.html"
+    link: "GREEN-GOLE/index.html",
+    chave: "green-gole"
   },
   {
     emoji: "🎯",
@@ -53,7 +57,8 @@ const JOGOS = [
     descricao: "Perguntas curiosas de números: quem chutar mais perto vence!",
     jogadores: "2+ jogadores",
     cor: "#4EA8FF",
-    link: "CHUTA-AI/index.html"
+    link: "CHUTA-AI/index.html",
+    chave: "chuta-ai"
   },
   {
     emoji: "🍻",
@@ -61,7 +66,8 @@ const JOGOS = [
     descricao: "Tire uma carta e escolha: encara o desafio ou bebe os goles!",
     jogadores: "2+ jogadores",
     cor: "#F97316",
-    link: "FAZ-OU-BEBE/index.html"
+    link: "FAZ-OU-BEBE/index.html",
+    chave: "faz-ou-bebe"
   }
 
   // 👉 Novo jogo? Adicione uma vírgula acima e cole um bloco aqui.

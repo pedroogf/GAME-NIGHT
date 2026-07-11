@@ -8,8 +8,10 @@
    Goles e pipocadas de cada um ficam no Placar da Galera.
    ============================================================ */
 
-const CHAVE_JOGADORES = 'greengole_jogadores';
-const CHAVE_PLACAR    = 'greengole_placar';
+/* A mesa de jogadores agora é a global do Game Night (ranking.js).
+   A chave antiga fica só para migrar nomes salvos antes da mudança. */
+const CHAVE_JOGADORES_ANTIGA = 'greengole_jogadores';
+const CHAVE_PLACAR = 'greengole_placar';
 
 /* Faixas de odds por dificuldade. A odd vira os goles de quem
    errou: palpite improvável = odd alta = castigo maior. */
@@ -69,10 +71,15 @@ function listarNomes(nomes) {
 /* ---------- persistência ---------- */
 
 function carregarDados() {
-  try {
-    const nomes = JSON.parse(localStorage.getItem(CHAVE_JOGADORES));
-    if (Array.isArray(nomes)) estado.jogadores = nomes;
-  } catch (e) { /* dados corrompidos: ignora */ }
+  // migra nomes salvos pela versão antiga para a mesa global
+  if (GameNight.jogadores().length === 0) {
+    try {
+      const antigos = JSON.parse(localStorage.getItem(CHAVE_JOGADORES_ANTIGA));
+      if (Array.isArray(antigos) && antigos.length) GameNight.salvarJogadores(antigos);
+    } catch (e) { /* dados corrompidos: ignora */ }
+  }
+  estado.jogadores = GameNight.jogadores();
+
   try {
     const salvo = JSON.parse(localStorage.getItem(CHAVE_PLACAR));
     if (salvo && salvo.goles && salvo.pipocadas) placarPessoal = salvo;
@@ -80,7 +87,7 @@ function carregarDados() {
 }
 
 function salvarJogadores() {
-  localStorage.setItem(CHAVE_JOGADORES, JSON.stringify(estado.jogadores));
+  GameNight.salvarJogadores(estado.jogadores);
 }
 
 function salvarPlacar() {
@@ -334,6 +341,7 @@ function resolverAposta(deuGreen) {
     estado.green++;
     el('placar-green').textContent = estado.green;
     apostaramNao.forEach(n => somarGoles(n, golesNao));
+    GameNight.adicionarPontos('green-gole', alvo, 1); // ranking do Game Night
 
     box.className = 'green';
     box.innerHTML =

@@ -2,7 +2,10 @@
 
 function selectMode(mode){
   state.mode = mode;
-  state.numPlayers = mode === 'dupla' ? 5 : 3;
+  // se a mesa do Game Night tem gente, já sugere esse número de jogadores
+  const nomesMesa = (typeof GameNight !== 'undefined') ? GameNight.jogadores() : [];
+  const minimo = mode === 'dupla' ? 5 : 3;
+  state.numPlayers = Math.min(30, Math.max(minimo, nomesMesa.length || minimo));
   state.numImpostors = 1;
   state.hintsEnabled = true;
   state.selectedCategories = [];

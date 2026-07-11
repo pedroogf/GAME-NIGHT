@@ -375,3 +375,40 @@ body {
   .pergunta { font-size: 1.7rem; }
   .botoes { flex-direction: row; }
 }
+
+
+/* ================= QUEM CHEGOU MAIS PERTO (ranking) ================= */
+.quem-acertou {
+  background: var(--fundo-card);
+  border: 1px solid var(--borda);
+  border-radius: 14px;
+  padding: 14px;
+  text-align: center;
+}
+
+.quem-rotulo {
+  color: var(--amarelo);
+  font-weight: 700;
+  font-size: 0.95rem;
+  margin-bottom: 10px;
+}
+
+.quem-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+
+.chip-nome {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--borda);
+  color: var(--texto);
+  font-size: 14px;
+  font-weight: 600;
+  padding: 8px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: transform 0.12s, border-color 0.2s;
+}
+.chip-nome:active { transform: scale(0.93); border-color: var(--amarelo); }

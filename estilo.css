@@ -81,6 +81,143 @@ body {
   margin-top: 6px;
 }
 
+/* ================= MESA E RANKING ================= */
+.paineis-topo {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 14px;
+  animation: surgir 0.5s ease both;
+}
+
+.chip-painel {
+  flex: 1;
+  background: var(--card);
+  border: 1px solid var(--linha);
+  color: var(--texto);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 12px 10px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: transform 0.12s, border-color 0.2s, background 0.2s;
+}
+.chip-painel:hover { background: var(--card-hover); border-color: rgba(183, 156, 255, 0.5); }
+.chip-painel:active { transform: scale(0.96); }
+
+.painel {
+  display: none;
+  flex-direction: column;
+  gap: 12px;
+  background: var(--card);
+  border: 1px solid var(--linha);
+  border-radius: var(--raio);
+  padding: 16px;
+  margin-bottom: 14px;
+}
+.painel.aberto { display: flex; animation: surgir 0.3s ease both; }
+
+.painel-dica { font-size: 13px; color: var(--texto-dim); line-height: 1.5; }
+
+.add-row { display: flex; gap: 10px; }
+
+.add-row input {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--linha);
+  border-radius: 14px;
+  padding: 12px 14px;
+  color: var(--texto);
+  font-family: inherit;
+  font-size: 15px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.add-row input:focus { border-color: #B79CFF; }
+
+.btn-add {
+  width: 48px;
+  border: none;
+  border-radius: 14px;
+  background: linear-gradient(150deg, #B79CFF, #7C5CFF);
+  color: #16102E;
+  font-size: 22px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform 0.12s;
+}
+.btn-add:active { transform: scale(0.93); }
+
+.lista-mesa { display: flex; flex-wrap: wrap; gap: 8px; }
+
+.chip-nome {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--linha);
+  color: var(--texto);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 8px 13px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: transform 0.12s, border-color 0.2s;
+}
+.chip-nome:active { transform: scale(0.93); border-color: #FF8FB1; }
+.chip-nome .x { color: #FF8FB1; font-weight: 800; margin-left: 3px; }
+
+.mesa-vazia { font-size: 13px; color: var(--texto-fraco); text-align: center; padding: 8px 0; }
+
+.abas-ranking { display: flex; flex-wrap: wrap; gap: 8px; }
+
+.aba-ranking {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--linha);
+  color: var(--texto-dim);
+  font-family: inherit;
+  font-size: 12.5px;
+  font-weight: 700;
+  padding: 7px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+}
+.aba-ranking.ativa {
+  color: #B79CFF;
+  border-color: rgba(183, 156, 255, 0.55);
+  background: rgba(124, 92, 255, 0.12);
+}
+
+.ranking-lista { display: flex; flex-direction: column; gap: 8px; }
+
+.ranking-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--linha);
+  border-radius: 12px;
+  padding: 11px 14px;
+  font-size: 14px;
+}
+.ranking-row .pos { width: 34px; font-weight: 800; color: var(--texto-dim); }
+.ranking-row .nome { flex: 1; font-weight: 700; }
+.ranking-row .pts { color: #B79CFF; font-weight: 800; font-variant-numeric: tabular-nums; }
+
+.btn-zerar {
+  align-self: center;
+  background: transparent;
+  border: 1px solid var(--linha);
+  color: var(--texto-fraco);
+  font-family: inherit;
+  font-size: 12.5px;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+}
+.btn-zerar:active { color: #FF8FB1; border-color: #FF8FB1; }
+
 /* ================= LISTA DE JOGOS ================= */
 .lista-jogos {
   display: flex;

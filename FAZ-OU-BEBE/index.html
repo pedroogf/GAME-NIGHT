@@ -184,6 +184,10 @@
     <p class="dica-toque" id="dica-toque">Toque na carta para revelar 👆</p>
 
     <div class="acoes-reveladas oculto" id="acoes-reveladas">
+      <div class="acoes-duo">
+        <button class="btn-secundario" onclick="registrarRodada(true)">✅ Fez (+1 pt)</button>
+        <button class="btn-secundario" onclick="registrarRodada(false)">🍺 Bebeu</button>
+      </div>
       <button class="btn-primario" onclick="proximaCarta()">Próxima carta ›</button>
       <div class="acoes-duo">
         <button class="btn-secundario" onclick="cartaAleatoria()">🎲 Carta aleatória</button>
@@ -227,6 +231,7 @@
 <!-- Aviso rápido -->
 <div class="toast" id="toast"></div>
 
+<script src="../ranking.js"></script>
 <script src="js/cards.js"></script>
 <script src="js/specialCards.js"></script>
 <script src="js/utils.js"></script>

@@ -43,17 +43,24 @@ function definirNomesAuto(auto) {
   if (!auto) montarCamposNomes();
 }
 
-/* Cria um campo de nome para cada jogador, preservando o que já foi digitado */
+/* Nomes da mesa do Game Night (cadastrados no hub) */
+function nomesDaMesa() {
+  return (typeof GameNight !== "undefined") ? GameNight.jogadores() : [];
+}
+
+/* Cria um campo de nome para cada jogador, preservando o que já foi
+   digitado e sugerindo os nomes da mesa do Game Night */
 function montarCamposNomes() {
   const lista = document.getElementById("lista-nomes");
   const digitados = Array.from(lista.querySelectorAll("input")).map(i => i.value);
+  const globais = nomesDaMesa();
   lista.innerHTML = "";
   for (let i = 0; i < setup.qtdJogadores; i++) {
     const input = document.createElement("input");
     input.type = "text";
     input.maxLength = 18;
     input.placeholder = "Jogador " + (i + 1);
-    input.value = digitados[i] || "";
+    input.value = digitados[i] || globais[i] || "";
     lista.appendChild(input);
   }
 }
@@ -73,12 +80,14 @@ function escolherModo(modo) {
   Som.clique();
   setup.modo = modo;
 
-  // monta a lista final de nomes
+  // monta a lista final de nomes: digitados > mesa do Game Night > Jogador N
   const nomes = [];
   const inputs = document.querySelectorAll("#lista-nomes input");
+  const globais = nomesDaMesa();
   for (let i = 0; i < setup.qtdJogadores; i++) {
     const digitado = !setup.nomesAutomaticos && inputs[i] ? inputs[i].value.trim() : "";
-    nomes.push(digitado || "Jogador " + (i + 1));
+    const daMesa = setup.nomesAutomaticos ? (globais[i] || "") : "";
+    nomes.push(digitado || daMesa || "Jogador " + (i + 1));
   }
 
   iniciarPartida(nomes, modo);
@@ -166,6 +175,16 @@ function preencherCarta(carta) {
 /* Próxima carta → passa a vez e prepara rodada nova */
 function proximaCarta() {
   Som.clique();
+  novaRodada(true);
+}
+
+/* Fez ou bebeu? Registra no ranking do Game Night e passa a vez */
+function registrarRodada(fez) {
+  Som.clique();
+  if (fez && typeof GameNight !== "undefined") {
+    GameNight.adicionarPontos("faz-ou-bebe", jogadorAtual(), 1);
+    mostrarToast("🏆 +1 ponto para " + jogadorAtual() + "!");
+  }
   novaRodada(true);
 }
 
@@ -264,5 +283,8 @@ function renderizarSwitches() {
 document.addEventListener("DOMContentLoaded", () => {
   aplicarPreferenciasVisuais();
   renderizarSwitches();
+  // se a mesa do Game Night tem gente, já sugere essa quantidade
+  const globais = nomesDaMesa();
+  if (globais.length >= 2) setup.qtdJogadores = Math.min(20, globais.length);
   document.getElementById("qtd-valor").textContent = setup.qtdJogadores;
 });

@@ -2,9 +2,13 @@
 
 function generatePlayers(){
   state.players = [];
+  // usa os nomes da mesa do Game Night; completa com "Jogador N" se faltar
+  const nomes = (typeof GameNight !== 'undefined') ? GameNight.jogadores() : [];
   for(let i=0;i<state.numPlayers;i++){
-    state.players.push({ id: 'p'+i, name: 'Jogador ' + (i+1) });
+    state.players.push({ id: 'p'+i, name: nomes[i] || ('Jogador ' + (i+1)) });
   }
+  // pontos no ranking só fazem sentido quando todos têm nome de verdade
+  state.nomesReais = nomes.length >= state.numPlayers;
 }
 
 
@@ -385,7 +389,39 @@ function finishGame(){
   }
 
 
+  // Registro do vencedor para o ranking do Game Night
+  const vbox = document.getElementById('vencedor-box');
+  if(state.nomesReais){
+    state.vencedorRegistrado = false;
+    vbox.style.display = 'block';
+    vbox.innerHTML = `<div class="big">🏆 Quem levou a melhor?</div>
+      <div class="btn-row" style="margin-top:12px;">
+        <button class="btn ghost" onclick="registrarVencedor('impostor')">🎭 Impostor</button>
+        <button class="btn ghost" onclick="registrarVencedor('grupo')">👥 Grupo</button>
+      </div>`;
+  } else {
+    vbox.style.display = 'none';
+  }
+
   goToScreen('screen-reveal');
+}
+
+
+// Soma pontos no ranking: impostor que escapa vale +2, grupo que acerta +1 cada
+function registrarVencedor(quem){
+  if(state.vencedorRegistrado) return;
+  state.vencedorRegistrado = true;
+
+  state.players.forEach(p=>{
+    const a = state.assignments[p.id];
+    if(quem === 'impostor' && a.role === 'impostor') GameNight.adicionarPontos('impostor', p.name, 2);
+    if(quem === 'grupo' && a.role === 'normal') GameNight.adicionarPontos('impostor', p.name, 1);
+  });
+
+  const vbox = document.getElementById('vencedor-box');
+  vbox.innerHTML = quem === 'impostor'
+    ? '<div class="big">🎭 +2 pontos para cada impostor no ranking!</div>'
+    : '<div class="big">👥 +1 ponto para cada jogador do grupo!</div>';
 }
 
 
