@@ -21,6 +21,69 @@ function buildWordPool(){
 }
 
 
+// Modo Dupla: agrupa o banco em famílias de palavras próximas.
+// A chave é a família da dica (ver HINT_FAMILIES em data.js);
+// dicas fora da tabela agrupam por igualdade exata da dica.
+function familyKeyOf(entry){
+  const fams = HINT_FAMILIES[entry.cat];
+  if(fams){
+    for(let i=0;i<fams.length;i++){
+      if(fams[i].indexOf(entry.hint) > -1) return entry.cat + '::familia-' + i;
+    }
+  }
+  return entry.cat + '::' + entry.hint;
+}
+
+
+// Sorteia `count` palavras próximas entre si (mesma família) para as duplas.
+function pickSimilarEntries(pool, count){
+  const groups = {};
+  pool.forEach(e=>{
+    const k = familyKeyOf(e);
+    (groups[k] = groups[k] || []).push(e);
+  });
+
+  const all = shuffle(Object.values(groups));
+  const full = all.filter(g=>g.length >= count);
+  if(full.length){
+    return shuffle(pick(full)).slice(0, count);
+  }
+
+  // Nenhuma família tem palavras suficientes: usa a maior
+  // e completa com palavras da mesma categoria (depois das demais).
+  const best = all.sort((a,b)=>b.length-a.length)[0];
+  const chosen = shuffle(best);
+  const cat = chosen[0].cat;
+  const rest = shuffle(pool.filter(e=>chosen.indexOf(e)===-1))
+    .sort((a,b)=>(a.cat===cat?0:1)-(b.cat===cat?0:1));
+  for(let i=0; chosen.length<count && i<rest.length; i++) chosen.push(rest[i]);
+  while(chosen.length < count) chosen.push(pick(pool));
+  return shuffle(chosen);
+}
+
+
+// Modo Undercover: sorteia duas palavras parecidas (mesma família) —
+// uma para o grupo e outra para o impostor, que não sabe que é ele.
+function pickUndercoverWords(pool){
+  const groups = {};
+  pool.forEach(e=>{
+    const k = familyKeyOf(e);
+    (groups[k] = groups[k] || []).push(e);
+  });
+  const big = Object.values(groups).filter(g=>g.length >= 2);
+  if(big.length){
+    const g = shuffle(pick(big));
+    return { normal: g[0], fake: g[1] };
+  }
+  // Sem família com 2 palavras: pega a mais próxima possível (mesma categoria)
+  const normal = pick(pool);
+  const rest = pool.filter(e=>e!==normal);
+  const sameCat = rest.filter(e=>e.cat===normal.cat);
+  const fake = sameCat.length ? pick(sameCat) : (rest.length ? pick(rest) : normal);
+  return { normal, fake };
+}
+
+
 function assignRound(){
   state.assignments = {};
   state.pairs = [];
@@ -41,15 +104,21 @@ function assignRound(){
     impostorIds.forEach(id=>{
       state.assignments[id] = { role:'impostor', word:null, hint: state.hintsEnabled ? chosen.hint : null, pairId:null };
     });
+  } else if(state.mode === 'undercover'){
+    const pool = buildWordPool();
+    const duo = pickUndercoverWords(pool);
+    normalIds.forEach(id=>{
+      state.assignments[id] = { role:'normal', word: duo.normal.word, hint:null, pairId:null };
+    });
+    impostorIds.forEach(id=>{
+      state.assignments[id] = { role:'impostor', word: duo.fake.word, hint:null, pairId:null };
+    });
   } else {
-    // Modo Dupla
+    // Modo Dupla — as palavras da rodada saem de uma mesma família
+    // (ex.: só comida japonesa), para dificultar distinguir as duplas
     const pairsCount = normalIds.length / 2;
-    const pool = shuffle(buildWordPool());
-
-    const chosenEntries = [];
-    for(let i=0;i<pairsCount;i++){
-      chosenEntries.push(pool[i % pool.length]);
-    }
+    const pool = buildWordPool();
+    const chosenEntries = pickSimilarEntries(pool, pairsCount);
     const shuffledNormals = shuffle(normalIds);
     for(let i=0;i<pairsCount;i++){
       const a = shuffledNormals[i*2];
@@ -112,7 +181,8 @@ function showPassScreenFor(idx){
   const remEl = document.getElementById('board-reminder');
 
 
-  if(a.role === 'impostor'){
+  // No Undercover, o impostor vê a mesma tela dos demais (não sabe que é ele)
+  if(a.role === 'impostor' && state.mode !== 'undercover'){
     backEl.classList.add('is-impostor');
     roleEl.textContent = 'Você é o IMPOSTOR';
     wordEl.textContent = '???';
@@ -129,7 +199,9 @@ function showPassScreenFor(idx){
     hintEl.textContent = '';
     remEl.textContent = state.mode === 'dupla'
       ? 'Converse dando pequenas pistas para descobrir quem tem a mesma palavra que você.'
-      : 'Deixe pistas sutis de que você tem a palavra real, sem falá-la diretamente!';
+      : state.mode === 'undercover'
+        ? 'Dê pistas sutis sobre a sua palavra. Cuidado: alguém recebeu uma palavra parecida — e nem sabe disso!'
+        : 'Deixe pistas sutis de que você tem a palavra real, sem falá-la diretamente!';
   }
   renderProgressDots('progress-dots', state.passOrder.length, idx);
 }
@@ -197,6 +269,9 @@ function goToDebate(){
   if(state.mode === 'classic'){
     title.textContent = 'Hora do debate';
     instr.textContent = 'Conversem, façam perguntas livres e deem dicas sobre a palavra secreta. O impostor deve fingir e mentir para sobreviver. Quando todos concordarem em votar e apontar o suspeito ao vivo, cliquem abaixo!';
+  } else if(state.mode === 'undercover'){
+    title.textContent = 'Hora do debate';
+    instr.textContent = 'Um por um, deem uma pista curta sobre a própria palavra. O impostor recebeu uma palavra parecida e nem sabe que é ele — desconfiem de quem der pistas que não encaixam! Quando todos apontarem o suspeito ao vivo, cliquem abaixo!';
   } else {
     title.textContent = 'Encontre sua dupla';
     instr.textContent = 'Conversem de forma livre para tentar reconhecer a sua dupla através de pistas sutis. O impostor deve prestar atenção nas conversas e se enfiar no meio fingindo ter a palavra de alguém! Quando todos apontarem suas duplas ao vivo, cliquem para ver o resultado!';
@@ -234,6 +309,28 @@ function finishGame(){
           <div class="rr-role">${a.role==='impostor' ? '🎭 Impostor' : 'Jogador'}</div>
         </div>
         <div class="rr-detail">${a.role==='impostor' ? (a.hint ? 'A dica rápida que recebeu foi:<br><strong style="color:var(--gold)">"' + a.hint + '"</strong>' : 'Não recebeu nenhuma dica.') : 'Palavra secreta: <strong style="color:var(--gold)">' + a.word + '</strong>'}</div>
+      `;
+      list.appendChild(row);
+    });
+  } else if(state.mode === 'undercover'){
+    const normalP = state.players.find(p=>state.assignments[p.id].role==='normal');
+    const normalWord = normalP ? state.assignments[normalP.id].word : '';
+    const fakeWord = impostors.length ? state.assignments[impostors[0].id].word : '';
+
+    summary.innerHTML = `<div class="big">${impostors.length>1?'Os impostores eram':'O impostor era'}</div>
+      <div style="margin-top:6px; font-size:16px; font-weight: 700; color:var(--red);">${impostors.map(p=>p.name).join(', ')}</div>
+      <div style="margin-top:10px; font-size:14px; color:var(--text-dim);">A palavra do grupo era <strong style="color:var(--gold)">${normalWord}</strong> e a palavra trocada era <strong style="color:var(--red)">${fakeWord}</strong></div>`;
+
+    state.players.forEach(p=>{
+      const a = state.assignments[p.id];
+      const row = document.createElement('div');
+      row.className = 'reveal-row' + (a.role==='impostor' ? ' impostor' : '');
+      row.innerHTML = `
+        <div class="rr-top">
+          <div class="rr-name">${p.name}</div>
+          <div class="rr-role">${a.role==='impostor' ? '🥸 Impostor' : 'Jogador'}</div>
+        </div>
+        <div class="rr-detail">${a.role==='impostor' ? 'Recebeu a palavra trocada: <strong style="color:var(--red)">' + a.word + '</strong> (sem saber que era o impostor!)' : 'Palavra do grupo: <strong style="color:var(--gold)">' + a.word + '</strong>'}</div>
       `;
       list.appendChild(row);
     });

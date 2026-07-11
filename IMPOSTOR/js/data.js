@@ -1474,3 +1474,183 @@ const CATEGORIES = {
   }
 
 };
+
+// ============================================================
+//  FAMÍLIAS DE DICAS (usadas no modo Encontre sua Dupla)
+//
+//  No modo Dupla, todas as palavras da rodada saem de uma mesma
+//  "família" — palavras próximas entre si (ex.: só comida japonesa,
+//  só goleiros, só times do interior). Assim fica difícil separar
+//  as duplas só pelo assunto, e o jogo fica mais interessante.
+//
+//  Cada família é uma lista de dicas que "andam juntas". Palavras
+//  cujas dicas não aparecem aqui se agrupam automaticamente com
+//  outras que tenham a MESMA dica — então palavras novas entram
+//  no esquema sem precisar mexer nesta tabela (basta reaproveitar
+//  dicas existentes ou adicionar a dica nova numa família).
+// ============================================================
+
+const HINT_FAMILIES = {
+
+  brasileirao_jogadores: [
+    ["Joga no gol", "Joga com luvas", "Goleiro veterano"],
+    ["Joga na frente", "Faz gols", "Fazia muitos gols", "Fez gol importante", "Bom de cabeça"],
+    ["Joga no meio", "É volante", "Meia experiente", "Meia veterano", "Dá bons passes"],
+    ["Joga na defesa", "Joga na lateral"],
+    ["É jovem", "É bem jovem", "É muito novo", "É uma promessa"],
+    ["Já é experiente", "Já é veterano", "Bem experiente", "Um dos mais velhos"],
+    ["É rápido", "É veloz", "Corre bastante", "Gosta de driblar", "É habilidoso"],
+    ["Chuta bem", "Chuta forte", "Chuta de canhota", "Bate pênaltis"],
+    ["É baixinho", "É bem baixinho"],
+    ["Jogou na Europa", "Voltou da Europa", "Jogou longe do Brasil", "Já jogou fora"],
+    ["É bem intenso", "Vive em polêmica", "Tem apelido curioso", "Tem nome curioso", "É bem forte"]
+  ],
+
+  jogadores_famosos: [
+    ["Joga no gol", "Jogava no gol"],
+    ["Joga na defesa", "Jogava na defesa", "Joga na lateral", "Jogava na lateral", "Cruza muito bem"],
+    ["Joga no meio", "É volante", "Dava muitos passes", "Dava belos passes", "Dá muitas assistências", "Batia bem as faltas"],
+    ["Faz muitos gols", "Fazia muitos gols", "Fez muitos gols", "Bom de finalização", "Baixinho e goleador"],
+    ["Ídolo antigo", "Ídolo de um clube só", "Vivia sorrindo", "Foi elegante em campo", "É careca", "Chutava muito forte"],
+    ["É jovem", "É muito novo"],
+    ["Muito rápido", "É veloz", "Corre bastante", "Gosta de driblar", "Gostava de driblar", "Jogava pela ponta"]
+  ],
+
+  famosos: [
+    ["Canta", "Cantava", "Canta e dança", "Canta há muito tempo", "Tem uma voz forte", "Tinha voz marcante", "Tem voz marcante", "Canta em dupla", "Canta e escreve", "Canta e atua", "Faz música eletrônica", "Ficou famoso dançando"],
+    ["Aparece na TV", "Aparecia na TV", "Fala nos jogos", "Saiu de um reality"],
+    ["Atua", "Atua há muito tempo", "Já atuou muito"],
+    ["Faz filmes", "Do cinema antigo", "Famosa desde nova"],
+    ["Faz as pessoas rirem", "Fazia as pessoas rirem"],
+    ["Famoso na internet", "Famosa na internet"],
+    ["É muito rico", "Mexia com tecnologia", "Muito inteligente"],
+    ["Foi ídolo no esporte", "É atleta"]
+  ],
+
+  times_europa: [
+    ["Muito vencedor", "Já foi dominante", "Domina no país", "Clube rico", "Forte atualmente", "Torcida enorme", "Vence bastante no país"],
+    ["Camisa listrada", "Camisa quadriculada"],
+    ["Camisa azul", "Camisa azul clara"],
+    ["Revela jovens", "Revela brasileiros"],
+    ["Torcida fiel", "Torcida quente", "Torcida barulhenta"],
+    ["Time discreto", "Já foi mais forte", "Já foi campeão surpresa", "Já surpreendeu no campeonato", "Já jogou a Champions", "Já venceu a Europa"],
+    ["Fica em Londres", "Time da capital", "Divide a cidade com um gigante"],
+    ["Clube recente", "Clube recente na elite", "Clube pequeno e rico"]
+  ],
+
+  times_brasileirao: [
+    ["Torcida gigante", "Ganhou títulos recentes", "Revelou craques"],
+    ["Time do Sul", "Time do sul"],
+    ["Time carioca", "Time carioca tradicional"],
+    ["Time da capital", "Time do Centro-Oeste"],
+    ["Time do interior", "Time paulista", "Time tradicional de SP"],
+    ["Já foi campeão surpresa", "Já foi mais forte", "Vive subindo e caindo", "Cresceu recentemente", "Clube recente"]
+  ],
+
+  selecoes: [
+    ["Da América do Sul", "Rival histórico do Brasil", "Já foi campeã várias vezes", "Faz divisa com o Brasil", "Joga na altitude", "País pequeno e tradicional"],
+    ["Já foi campeã", "Onde o futebol nasceu", "Já foi campeã europeia", "Teve boa geração", "Cor laranja", "Camisa quadriculada"],
+    ["Da África", "Surpreendeu na Copa", "Tem muita história"],
+    ["Do leste europeu", "País bem novo"],
+    ["País bem pequeno", "País pequeno", "Quase nunca vence"],
+    ["Da América do Norte", "País bem rico", "Ilha do Caribe", "Da América Central"],
+    ["Da Ásia", "Bem distante", "País bem populoso", "Do outro lado do mundo", "Da Oceania", "País fechado"],
+    ["Do Oriente Médio", "País do deserto", "Sediou uma Copa", "Fica entre continentes"],
+    ["Fala inglês", "Da Europa"],
+    ["Ilha do Mediterrâneo", "País bem grande"]
+  ],
+
+  comida: [
+    ["Comida oriental", "Comida japonesa", "Leva peixe cru"],
+    ["Comida mexicana", "Prato espanhol"],
+    ["Doce de festa", "Doce de coco", "Doce amarelinho", "Tem em aniversário"],
+    ["Doce de festa junina", "Feita de milho", "Doce de milho"],
+    ["Sobremesa clássica", "Sobremesa cremosa", "Sobremesa gelada", "Sobremesa que balança", "Tem cobertura de chocolate", "Quente por dentro", "Doce de chocolate"],
+    ["Servido gelado", "Bebida gelada"],
+    ["Aparece no Natal", "Aparece na Páscoa", "Sobremesa de Natal"],
+    ["Feito na brasa", "Bem suculenta", "Assa por horas", "Acompanha churrasco"],
+    ["Salgado de festa", "Salgado recheado", "Salgado de padaria", "Salgado meio árabe", "Comprado na feira"],
+    ["Doce de rua", "Doce fritinho", "Doce de padaria", "Café da manhã doce", "Massa fininha"],
+    ["Lanche rápido", "Lanche de rua", "Lanche simples", "Comida de rua", "Petisco de frango"],
+    ["Massa italiana", "Massa recheada", "Vai ao forno"],
+    ["Comida do Nordeste", "Prato do Nordeste", "Café da manhã nordestino"],
+    ["Prato da Bahia", "Comida de rua baiana"],
+    ["Prato pesado", "Prato mineiro", "Prato gaúcho", "Feita na panela grande"],
+    ["Bem cremoso", "Leva purê", "Leva queijo derretido"],
+    ["Leva peixe", "Petisco de praia", "Comum na praia"],
+    ["Servida quente", "Servido quente", "Boa pra quem está doente", "Fica pronto rápido"],
+    ["Tem quase todo dia", "Do dia a dia", "Acompanhamento comum", "Comum aos domingos", "Leva ovo", "De padaria"]
+  ],
+
+  objetos: [
+    ["Fica na cozinha", "Fica no fogão", "Fica na pia", "Fica na gaveta", "Usado na cozinha", "Fica na mesa"],
+    ["Faz barulho", "Usada de manhã", "Mantém a temperatura", "Esquenta bastante", "Esquenta o ar", "Fica na área de serviço", "Ilumina a casa", "Dá energia", "Fica na tomada"],
+    ["Fica no banheiro", "Item de banheiro"],
+    ["Fica no quarto", "Fica na cama", "Fica no guarda-roupa", "Bom no frio", "Bem macio", "Bem macia"],
+    ["Fica na sala", "Fica na estante", "Fica na parede", "Fica no chão", "Fica na janela", "Precisa de água"],
+    ["Ferramenta comum", "Serve pra medir", "Serve pra subir", "Bem afiada", "Bem reta"],
+    ["Material escolar", "Cheio de folhas", "Cheio de páginas", "Bem simples", "Faz contas"],
+    ["Serve pra limpar", "Serve pra água"],
+    ["Bem pequeno", "Bem pequena", "Cabe no bolso", "Cabe na mão"],
+    ["Vai no pé", "Vai na cabeça", "Vai na cintura", "Vai no dedo", "Vai no pescoço", "Fica no rosto", "Fica no pulso", "Fica na orelha", "Serve pro cabelo", "Tem cheiro bom", "Item de maquiagem", "Bem colorido"],
+    ["Usado no trabalho", "Cheio de botões", "Quase todo mundo tem", "Registra imagens", "Fica na mão"],
+    ["Usado em jogos", "Usada pra brincar", "Faz som", "Tem duas rodas", "Boa pra descansar", "Serve pra ver longe"]
+  ],
+
+  profissoes: [
+    ["Área da saúde", "Ajuda os doentes", "Cuida de crianças", "Cuida dos olhos", "Estudou muitos anos", "Sabe escutar", "Entende de comida"],
+    ["Trabalha com as mãos", "Trabalho minucioso", "Conserta calçados", "Trabalha com madeira", "Trabalha com cuidado", "Cuida das unhas"],
+    ["Trabalho criativo", "Trabalha desenhando", "Trabalha escrevendo", "Trabalha com música", "Trabalha com filmes", "Trabalha com imagens"],
+    ["Trabalha com a voz", "Trabalha com som", "Aparece em cena", "Aparece bastante", "Faz as pessoas rirem", "Faz truques", "Trabalha com o corpo", "Trabalha à noite"],
+    ["Trabalha na rua", "Trabalha dirigindo", "Trabalha viajando", "Anda bastante", "Trabalha voando", "Trabalha no posto"],
+    ["Trabalho pesado", "Trabalha com metal", "Fica meio sujo", "Trabalho arriscado"],
+    ["Trabalha ao ar livre", "Trabalha no campo", "Trabalha perto da água", "Trabalha na água", "Estuda a natureza", "Fica de olho na água", "Gosta de animais"],
+    ["Trabalha com números", "Trabalha com dinheiro", "Trabalha no computador", "Trabalha na internet", "Organiza a agenda", "Toma decisões", "Bom em cálculos", "Trabalha com idiomas", "Estuda o passado", "Trabalha em silêncio", "Vive pesquisando"],
+    ["Usa uniforme", "Usa farda", "Usa terno", "Usa toga", "Trabalho sério", "Fica de olho", "Vive investigando", "Fica na entrada"],
+    ["Atende as pessoas", "Trabalha numa loja", "Fala com muita gente", "Trabalha em pé"],
+    ["Acorda cedo", "Trabalha com doces", "Entende de bebidas"],
+    ["Deixa tudo limpo", "Cuida do prédio", "Trabalha num hotel"],
+    ["Trabalha com esporte", "Trabalha apitando"]
+  ],
+
+  animais: [
+    ["Vive no mar", "Vive na água", "Vive em rios", "Vive no fundo", "Anda em cardume", "Nada contra a corrente", "Peixe bem grande", "Parece cobra", "Melhor não encostar", "Anda de lado", "Bem calmo", "Bem enorme"],
+    ["Vive perto da água", "Fica na água", "Fica perto da água", "Gosta de água", "Vive perto do mar"],
+    ["Vive na fazenda", "Vive no galinheiro", "Acorda cedo", "Parece cavalo", "Carrega peso", "Parece porco", "Aparece no Natal"],
+    ["Bem comum em casa", "Pula bastante"],
+    ["Bem pesado", "Bem grandão", "Bem forte", "Vive na savana", "Vive em bando", "Caçador solitário", "Corre bastante", "Corre muito rápido", "Corre muito", "Come folhas", "Aguenta o calor"],
+    ["Vive na mata", "Tem casco duro", "Tem língua comprida", "Bem lenta", "Tem pernas compridas", "Vive embaixo da terra", "Tem cheiro forte", "Bem diferente", "Rói bastante", "Bem esperta", "Bem esperto"],
+    ["Tem penas coloridas", "Tem bico grande", "Tem penas bonitas", "Fica numa perna só", "Nada com elegância", "Canta bastante", "Canta bonito", "Bem pequenininho"],
+    ["Voa alto", "Caça do alto", "Voa em círculos", "Bem escuro", "Sai de noite", "Voa em bando", "Vive na cidade"],
+    ["Aguenta o frio", "Vive no frio", "Bem peludo"],
+    ["Rasteja", "Gosta do sol", "Muda de cor", "Anda devagar"],
+    ["Faz teia", "Faz zumbido", "Tem asas coloridas", "Vive em grupo", "Tem ferrão", "Voa por aí", "Brilha no escuro", "Bem pequenininha"],
+    ["Sobe em árvores", "Vive em árvores", "Come bambu"]
+  ],
+
+  filmes_series: [
+    ["Tem vários heróis juntos", "Tem poderes de aranha", "Não tem poderes de verdade", "Vem de outro planeta", "É um vilão famoso", "Tem um super-herói", "Usa uma armadura", "Usa um escudo", "Usa um martelo"],
+    ["Se passa no espaço", "Tem magia", "Mexe com a realidade", "Mexe com o tempo", "Tem dinossauros", "Tem robôs"],
+    ["Cheio de ação", "É um agente secreto", "Tem muitos carros", "É sobre boxe", "Envolve luta", "Se passa na selva", "Se passa no mar"],
+    ["É uma série de comédia", "É de comédia", "É antigo e engraçado"],
+    ["É uma novela", "É infantil"],
+    ["É um anime", "É um anime antigo"],
+    ["É de suspense", "É de terror", "Tem algo sobrenatural", "Tem zumbis", "Segue um assassino", "É investigativo"],
+    ["É uma série dramática", "Se passa num hospital", "Se passa numa ilha", "Se passa numa prisão", "Envolve máfia", "Fala de máfia", "Fala da realeza", "Envolve guerreiros antigos", "Envolve advogados", "É uma série coreana", "Tem dragões"],
+    ["É um musical", "É uma série de romance", "Conta uma vida inteira", "Baseado em fato real"]
+  ],
+
+  marcas: [
+    ["Faz celulares", "Faz computadores", "Faz eletrônicos", "É uma empresa de tecnologia", "Faz sistemas operacionais", "Faz processadores", "Faz placas de vídeo"],
+    ["É uma rede social", "É de streaming", "É de streaming de música", "É um aplicativo de mensagens", "É de vídeos", "É uma rede social profissional", "Serve pra pedir carro", "Serve pra pedir comida", "É um banco digital", "Vende de tudo online"],
+    ["É um refrigerante", "É energético", "É uma cerveja", "É de café"],
+    ["Faz vários alimentos", "Faz iogurte", "É um salgadinho", "Faz panetone", "É um creme de avelã", "É um chocolate", "É um chiclete", "É uma bala", "É achocolatado", "Faz frango", "É um biscoito", "É um chocolate colorido"],
+    ["Faz tênis", "Faz chinelo", "Vende roupas", "Faz jeans", "Faz óculos", "É de luxo", "Faz relógios", "Tem um jacaré no logo", "Vende roupas esportivas"],
+    ["Faz carros", "Faz carros esportivos", "Faz carros de luxo", "Faz carros e motos"],
+    ["Vende lanches", "Vende frango frito", "Vende sanduíches", "Vende esfihas", "É um restaurante", "Vende café"],
+    ["Vende eletrodomésticos", "Vende de tudo", "É um supermercado", "Faz eletrodomésticos"],
+    ["É um videogame", "São blocos de montar", "É uma boneca"],
+    ["Faz pasta de dente", "Faz lâminas de barbear", "Faz pilhas"]
+  ]
+
+};

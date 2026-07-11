@@ -39,9 +39,17 @@
         </span>
         <span class="m-arrow">›</span>
       </button>
+      <button class="mode-card" onclick="selectMode('undercover')">
+        <span class="m-icon">🥸</span>
+        <span class="m-body">
+          <span class="m-title">Undercover</span>
+          <span class="m-desc">Todos recebem a mesma palavra — menos o impostor, que ganha uma palavra parecida e nem desconfia que é ele. Ninguém sabe qual é a palavra verdadeira!</span>
+        </span>
+        <span class="m-arrow">›</span>
+      </button>
     </div>
     <div class="spacer"></div>
-    <p class="footnote">Mínimo de 3 jogadores no Clássico · 5 na Dupla</p>
+    <p class="footnote">Mínimo de 3 jogadores no Clássico e Undercover · 5 na Dupla</p>
   </div>
 
 
@@ -74,7 +82,7 @@
     </div>
 
 
-    <div class="field">
+    <div class="field" id="hint-field">
       <label>Dica para o impostor</label>
       <div class="cat-grid">
         <div class="cat-chip on" id="hint-chip-on" onclick="setHintsEnabled(true)">Com dica</div>

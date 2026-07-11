@@ -13,6 +13,21 @@ let audioCtx = null; // Som gerado via código
 // Tópico selecionado no menu. null = modo aleatório (todos os grupos ativos)
 let grupoSelecionado = null;
 
+// Baralho de categorias: sorteia sem repetir até esgotar
+let baralhoCategorias = [];
+
+// Ritmo da bomba: faixa de duração (em segundos) de cada rodada
+const RITMOS = {
+    rapido: { min: 10, max: 20 },
+    normal: { min: 15, max: 40 },
+    zen:    { min: 30, max: 60 }
+};
+let ritmoAtual = 'normal';
+
+// Falso alarme: chance de a bomba "engasgar" e voltar por alguns segundos
+const CHANCE_FALSO_ALARME = 0.15;
+let falsoAlarmePendente = false;
+
 // --- Elementos do menu ---
 const telaMenu = document.getElementById('tela-menu');
 const gradeTopicos = document.getElementById('grade-topicos');
@@ -67,6 +82,7 @@ function selecionarAleatorio() {
 }
 
 function abrirTelaJogo() {
+    montarBaralho(); // baralho novo a cada troca de tópico
     telaMenu.classList.add('escondido');
     telaJogo.classList.remove('escondido');
     resetarTelaJogo();
@@ -83,6 +99,7 @@ function voltarAoMenu() {
 function resetarTelaJogo() {
     jogoAtivo = false;
     clearTimeout(loopJogo);
+    travarChipsRitmo(false);
     boxPunicao.style.display = 'none';
     bombaVisual.className = '';
     bombaVisual.innerText = '💣';
@@ -118,26 +135,42 @@ function tocarBipe(frequencia, duracao) {
 
 /* ================= SORTEIO ================= */
 
-// Sorteia uma categoria respeitando o tópico escolhido no menu
-function sortearCategoria() {
-    let grupo;
+// Embaralha uma lista no lugar (Fisher-Yates)
+function embaralharLista(lista) {
+    for (let i = lista.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        const tmp = lista[i];
+        lista[i] = lista[j];
+        lista[j] = tmp;
+    }
+}
 
-    if (grupoSelecionado !== null) {
-        // Tópico fixo escolhido no menu
-        grupo = GRUPOS_CATEGORIAS[grupoSelecionado];
-    } else {
-        // Modo aleatório: sorteia entre todos os grupos ativos
-        const gruposAtivos = GRUPOS_CATEGORIAS.filter(function (g) {
+// Monta o baralho conforme o tópico escolhido (sem repetição até esgotar)
+function montarBaralho() {
+    baralhoCategorias = [];
+
+    const grupos = grupoSelecionado !== null
+        ? [GRUPOS_CATEGORIAS[grupoSelecionado]]
+        : GRUPOS_CATEGORIAS.filter(function (g) {
             return g.ativo && g.itens.length > 0;
         });
-        grupo = gruposAtivos[Math.floor(Math.random() * gruposAtivos.length)];
-    }
 
-    const item = grupo.itens[Math.floor(Math.random() * grupo.itens.length)];
-    return {
-        grupo: grupo.emoji + ' ' + grupo.nome,
-        categoria: item
-    };
+    grupos.forEach(function (grupo) {
+        grupo.itens.forEach(function (item) {
+            baralhoCategorias.push({
+                grupo: grupo.emoji + ' ' + grupo.nome,
+                categoria: item
+            });
+        });
+    });
+
+    embaralharLista(baralhoCategorias);
+}
+
+// Tira a próxima categoria do baralho (reembaralha quando esgota)
+function sortearCategoria() {
+    if (baralhoCategorias.length === 0) montarBaralho();
+    return baralhoCategorias.pop();
 }
 
 /* ================= JOGO ================= */
@@ -156,14 +189,20 @@ function comecarRodada() {
     btnAcao.disabled = true;
     btnAcao.innerText = 'PASSE O CELULAR!';
 
+    travarChipsRitmo(true);
+
     // Sorteia grupo + categoria
     const sorteio = sortearCategoria();
     txtGrupo.innerText = sorteio.grupo;
     txtCategoria.innerText = sorteio.categoria;
 
-    // Tempo aleatório entre 15 e 40 segundos
-    tempoTotal = Math.floor(Math.random() * (40 - 15 + 1)) + 15;
+    // Tempo aleatório dentro da faixa do ritmo escolhido
+    const ritmo = RITMOS[ritmoAtual];
+    tempoTotal = Math.floor(Math.random() * (ritmo.max - ritmo.min + 1)) + ritmo.min;
     tempoRestante = tempoTotal;
+
+    // Sorteia se esta rodada terá um falso alarme no fim
+    falsoAlarmePendente = Math.random() < CHANCE_FALSO_ALARME;
 
     bombaVisual.className = '';
     bombaVisual.innerText = '💣';
@@ -194,10 +233,31 @@ function executarCiclo() {
     tempoRestante -= (proximoIntervalo / 1000);
 
     if (tempoRestante <= 0) {
-        explodirBomba();
+        if (falsoAlarmePendente) {
+            dispararFalsoAlarme();
+        } else {
+            explodirBomba();
+        }
     } else {
         loopJogo = setTimeout(executarCiclo, proximoIntervalo);
     }
+}
+
+// A bomba "engasga": silêncio de suspense... e volta por mais alguns segundos
+function dispararFalsoAlarme() {
+    falsoAlarmePendente = false;
+
+    bombaVisual.className = '';
+    bombaVisual.innerText = '💣';
+    tocarBipe(180, 0.35); // tic abafado, como se tivesse falhado
+
+    loopJogo = setTimeout(function () {
+        if (!jogoAtivo) return;
+        // Retoma direto no pânico por mais 2 a 4 segundos
+        tempoRestante = Math.floor(Math.random() * 3) + 2;
+        tempoTotal = tempoRestante * 5; // força o visual/som de perigo
+        executarCiclo();
+    }, 1200);
 }
 
 function explodirBomba() {
@@ -222,12 +282,32 @@ function explodirBomba() {
     btnAcao.style.opacity = '1';
     btnAcao.disabled = false;
     btnAcao.innerText = 'JOGAR NOVAMENTE';
+    travarChipsRitmo(false);
+}
+
+/* ================= RITMO ================= */
+
+function travarChipsRitmo(travar) {
+    document.querySelectorAll('.chip-ritmo').forEach(function (chip) {
+        chip.disabled = travar;
+    });
+}
+
+function selecionarRitmo(chip) {
+    if (jogoAtivo) return;
+    ritmoAtual = chip.dataset.ritmo;
+    document.querySelectorAll('.chip-ritmo').forEach(function (c) {
+        c.classList.toggle('selecionado', c === chip);
+    });
 }
 
 /* ================= LIGAÇÕES ================= */
 btnAleatorio.addEventListener('click', selecionarAleatorio);
 btnVoltar.addEventListener('click', voltarAoMenu);
 btnAcao.addEventListener('click', gerenciarJogo);
+document.querySelectorAll('.chip-ritmo').forEach(function (chip) {
+    chip.addEventListener('click', function () { selecionarRitmo(chip); });
+});
 
 // Monta o menu assim que a página carrega
 montarMenu();

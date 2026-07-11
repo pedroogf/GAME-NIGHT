@@ -8,8 +8,13 @@ function selectMode(mode){
   state.selectedCategories = [];
 
 
-  document.getElementById('setup-eyebrow').textContent = mode === 'dupla' ? 'Modo: Encontre sua Dupla' : 'Modo: Clássico';
+  document.getElementById('setup-eyebrow').textContent =
+    mode === 'dupla' ? 'Modo: Encontre sua Dupla' :
+    mode === 'undercover' ? 'Modo: Undercover' : 'Modo: Clássico';
   document.getElementById('setup-title').textContent = 'Quem vai jogar?';
+
+  // No Undercover o impostor recebe uma palavra parecida, não uma dica
+  document.getElementById('hint-field').style.display = mode === 'undercover' ? 'none' : '';
 
 
   renderCategoryGrid();

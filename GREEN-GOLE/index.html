@@ -45,10 +45,14 @@
         <!-- ================= TELA 2: JOGO ================= -->
         <section id="tela-jogo" class="tela">
 
-            <!-- Barra superior: tema atual + placar -->
+            <!-- Barra superior: tema atual + jogadores + placar pessoal -->
             <div class="barra-topo">
                 <button class="chip-tema" id="chip-tema" onclick="trocarTema()">⚽ Futebol · trocar</button>
-                <div class="ao-vivo"><span class="ponto"></span>AO VIVO</div>
+                <div class="chips-direita">
+                    <button class="chip-tema" id="chip-jogadores" onclick="abrirJogadores()">👥 0</button>
+                    <button class="chip-tema" onclick="abrirPlacar()">🏆</button>
+                    <div class="ao-vivo"><span class="ponto"></span>AO VIVO</div>
+                </div>
             </div>
 
             <div class="placar">
@@ -64,10 +68,20 @@
                 </div>
 
                 <div class="alvo" id="alvo-box" style="display:none;">
-                    🎯 Alvo: <b id="alvo-nome"></b>
+                    🎯 Será que <b id="alvo-nome"></b> consegue?
                 </div>
 
                 <p class="desafio-texto" id="texto-desafio">Toque em "Nova Aposta" para abrir o mercado!</p>
+
+                <!-- Juiz define o risco do desafio (gera as odds) -->
+                <div id="dificuldade-box" style="display:none;">
+                    <p class="rotulo-fase">⚖️ Juiz, qual o risco desse desafio?</p>
+                    <div class="dificuldade-row">
+                        <button class="chip-dif" data-dif="facil" onclick="escolherDificuldade('facil')">🟢 Fácil</button>
+                        <button class="chip-dif" data-dif="media" onclick="escolherDificuldade('media')">🟡 Média</button>
+                        <button class="chip-dif" data-dif="dificil" onclick="escolherDificuldade('dificil')">🔴 Difícil</button>
+                    </div>
+                </div>
 
                 <!-- Odds -->
                 <div class="odds-container" id="odds-box" style="display:none;">
@@ -81,7 +95,11 @@
                     </div>
                 </div>
 
-                <p class="aviso-aposta" id="aviso-aposta" style="display:none;">✋ Todo mundo aposta em voz alta: SIM ou NÃO?</p>
+                <!-- Apostas da roda: cada um marca SIM ou NÃO no próprio nome -->
+                <div id="apostas-box" style="display:none;">
+                    <p class="rotulo-fase">✋ Toque no seu nome: 1 toque = <b class="txt-green">SIM</b> · 2 toques = <b class="txt-red">NÃO</b></p>
+                    <div class="apostas-grid" id="apostas-grid"></div>
+                </div>
 
                 <!-- Cronômetro rápido -->
                 <div class="timer-row" id="timer-row" style="display:none;">
@@ -101,6 +119,41 @@
             <div id="resultado-box"></div>
 
             <button class="btn-gerar" id="btn-gerar" onclick="gerarAposta()">🎲 Nova Aposta</button>
+        </section>
+
+        <!-- ================= TELA 3: JOGADORES ================= -->
+        <section id="tela-jogadores" class="tela">
+            <header class="cabecalho">
+                <p class="eyebrow">Quem tá na mesa</p>
+                <h1 class="titulo-tela">👥 Jogadores</h1>
+                <p class="tagline">Os desafios serão sorteados entre esses nomes.<br>Mínimo de 2 jogadores.</p>
+            </header>
+
+            <div class="add-row">
+                <input type="text" id="input-nome" maxlength="14" placeholder="Nome do jogador" autocomplete="off">
+                <button class="btn-add" onclick="adicionarJogador()">+</button>
+            </div>
+
+            <div class="lista-jogadores" id="lista-jogadores"></div>
+
+            <button class="btn-gerar" id="btn-comecar" onclick="confirmarJogadores()" disabled>Cadastre pelo menos 2 jogadores</button>
+        </section>
+
+        <!-- ================= TELA 4: PLACAR DA GALERA ================= -->
+        <section id="tela-placar" class="tela">
+            <header class="cabecalho">
+                <p class="eyebrow">Ranking da noite</p>
+                <h1 class="titulo-tela">🏆 Placar da Galera</h1>
+            </header>
+
+            <div id="banner-pipoqueiro" class="banner-pipoqueiro" style="display:none;"></div>
+
+            <div id="placar-lista"></div>
+
+            <div class="botoes-acao">
+                <button class="btn-red" onclick="zerarPlacar()">🗑 Zerar placar</button>
+                <button class="btn-green" onclick="fecharPlacar()">← Voltar</button>
+            </div>
         </section>
 
     </div>

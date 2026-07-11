@@ -84,25 +84,13 @@ const TEMAS = {
       "Girar 5 vezes no lugar e depois andar em linha reta.",
       "Dizer o nome completo de 3 pessoas da roda sem errar.",
       "Soletrar 'otorrinolaringologista' sem errar em 15 segundos.",
-      "Ganhar uma batalha de rima com a pessoa a sua direita",
-      ""
+      "Ganhar uma batalha de rima com a pessoa a sua direita"
     ]
   }
 
 };
 
-/* Possíveis alvos do desafio (sorteados a cada rodada) */
-const ALVOS = [
-  "Você (quem apertou o botão)",
-  "A pessoa à sua direita",
-  "A pessoa à sua esquerda",
-  "Quem está na sua frente",
-  "A pessoa mais nova da roda",
-  "A pessoa mais velha da roda",
-  "O dono do celular",
-  "Quem bebeu por último",
-  "Quem riu por último"
-];
+/* O alvo agora é sorteado entre os jogadores cadastrados no app. */
 
 /* Frases de resultado (sorteadas) */
 const FRASES_GREEN = [
