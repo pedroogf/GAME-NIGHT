@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Letra Quente</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+
+    <!-- ================= TELA DE MENU ================= -->
+    <div class="container tela" id="tela-menu">
+        <a href="../index.html" class="link-hub">← Game Night</a>
+        <h1>🔤 Letra Quente</h1>
+        <p class="subtitulo">Tema + letra: fale uma palavra e toque pra passar a vez!</p>
+
+        <!-- Como jogar -->
+        <div class="regras-box">
+            <div>📱 Celular no centro da roda</div>
+            <div>🗣️ Falou a palavra? <b>Toque na tela</b>: o tempo reinicia pro próximo</div>
+            <div>⏰ Estourou o tempo? <b>Prenda + bebida!</b> Marque quem perdeu</div>
+        </div>
+
+        <!-- Tempo por jogador -->
+        <p class="rotulo-config">⏱️ Tempo pra falar a palavra</p>
+        <div class="tempo-box" id="tempo-box">
+            <button class="chip-tempo" data-tempo="5">⚡ 5s</button>
+            <button class="chip-tempo selecionado" data-tempo="8">🔥 8s</button>
+            <button class="chip-tempo" data-tempo="10">💣 10s</button>
+            <button class="chip-tempo" data-tempo="15">🧘 15s</button>
+        </div>
+
+        <!-- Botão do modo aleatório -->
+        <button id="btn-aleatorio" class="btn-aleatorio">🎲 MODO ALEATÓRIO<br><span>Cai qualquer tema!</span></button>
+
+        <p class="ou">— ou escolha um tema —</p>
+
+        <!-- Grade de temas (preenchida automaticamente pelo JS) -->
+        <div id="grade-temas" class="grade-temas"></div>
+    </div>
+
+    <!-- ================= TELA DO JOGO ================= -->
+    <div class="container tela escondido" id="tela-jogo">
+        <button id="btn-voltar" class="btn-voltar">← Voltar ao menu</button>
+
+        <h1 id="titulo-tema">Letra Quente</h1>
+
+        <!-- Tema + letra sorteados -->
+        <div id="sorteio-box">
+            <div id="sorteio-tema">Toque em Iniciar pra sortear!</div>
+            <div id="sorteio-letra"></div>
+        </div>
+
+        <!-- Área de toque: passa a vez / mostra o tempo -->
+        <div id="area-toque">
+            <span id="tempo-num">🔤</span>
+        </div>
+        <p id="dica-toque" class="dica-toque">Falou a palavra? Toque no círculo e aponte pro próximo!</p>
+
+        <!-- Resultado da rodada (prenda + quem perdeu) -->
+        <div id="resultado-box" class="escondido"></div>
+        <div id="prenda-box" class="escondido"></div>
+        <div id="quem-perdeu" class="escondido"></div>
+
+        <button id="btn-acao">INICIAR RODADA</button>
+    </div>
+
+    <!-- Mesa global e ranking do Game Night -->
+    <script src="../ranking.js"></script>
+    <!-- Banco de temas e prendas (edite este arquivo para adicionar mais) -->
+    <script src="temas.js"></script>
+    <!-- Lógica do jogo -->
+    <script src="jogo.js"></script>
+</body>
+</html>

@@ -68,6 +68,15 @@ const JOGOS = [
     cor: "#F97316",
     link: "FAZ-OU-BEBE/index.html",
     chave: "faz-ou-bebe"
+  },
+  {
+    emoji: "🔤",
+    nome: "Letra Quente",
+    descricao: "Tema + letra: fale uma palavra e toque pra passar. Estourou o tempo? Bebeu!",
+    jogadores: "3+ jogadores",
+    cor: "#A855F7",
+    link: "LETRA-QUENTE/index.html",
+    chave: "letra-quente"
   }
 
   // 👉 Novo jogo? Adicione uma vírgula acima e cole um bloco aqui.
