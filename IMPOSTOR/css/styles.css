@@ -241,6 +241,8 @@ a.back-link{ text-decoration:none; display:inline-block; }
 .instr-card{ background: rgba(0,0,0,0.18); border:1px solid var(--line); border-radius:12px; padding:16px; font-size:14px; color:var(--text-dim); line-height:1.55; margin-bottom:16px; }
 .roster{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom: 8px; }
 .roster .chip{ font-size:13px; background: rgba(255,255,255,0.04); border:1px solid var(--line); padding:7px 12px; border-radius:20px; }
+.roster .chip.selectable{ cursor:pointer; user-select:none; transition: background .15s, border-color .15s, color .15s; }
+.roster .chip.selectable.selected{ background: rgba(214,67,46,0.18); border-color: var(--red); color: var(--red); font-weight:700; }
 
 /* ---- Revelação ---- */
 .reveal-scroll{ flex:1; overflow-y:auto; margin: 8px 0 16px; min-height:0; -webkit-overflow-scrolling: touch; }

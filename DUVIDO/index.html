@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Duvido</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+
+    <!-- ================= TELA 1: SETUP ================= -->
+    <div class="tela tela-scroll" id="tela-setup">
+        <a href="../index.html" class="link-hub">← Game Night</a>
+        <h1>🤥 Duvido</h1>
+        <p class="subtitulo">Fale itens do top 10, blefe à vontade — e grite DUVIDO pra caçar mentira!</p>
+
+        <div class="regras-box">
+            <div>📱 Celular no meio da mesa: ele é só o <b>juiz</b></div>
+            <div>🗣️ Falem itens da lista em voz alta — pode blefar!</div>
+            <div>⚡ Alguém gritou <b>DUVIDO</b>? Só aí a palavra entra no app</div>
+            <div>💔 Errou o duvido ou foi pego blefando? Perde 1 vida</div>
+        </div>
+
+        <p class="rotulo-config">👥 Jogadores (2 a 10)</p>
+        <form id="form-jogador" class="linha-add" autocomplete="off">
+            <input type="text" id="input-nome" placeholder="Nome do jogador"
+                   maxlength="14" autocomplete="off" autocorrect="off"
+                   autocapitalize="words" spellcheck="false">
+            <button type="submit" class="btn-add">+</button>
+        </form>
+        <div id="lista-jogadores" class="lista-jogadores"></div>
+
+        <p class="rotulo-config">❤️ Vidas iniciais</p>
+        <div class="chips-vidas" id="chips-vidas">
+            <button class="chip-vida" data-vidas="1">1</button>
+            <button class="chip-vida" data-vidas="2">2</button>
+            <button class="chip-vida selecionado" data-vidas="3">3</button>
+            <button class="chip-vida" data-vidas="4">4</button>
+            <button class="chip-vida" data-vidas="5">5</button>
+        </div>
+
+        <button id="btn-comecar" class="btn-principal" disabled>COMEÇAR</button>
+    </div>
+
+    <!-- ================= TELA 2: JOGO ================= -->
+    <div class="tela tela-jogo escondido" id="tela-jogo">
+        <div class="tema-box">
+            <div class="tema-rotulo">TEMA</div>
+            <div id="tema-titulo" class="tema-titulo"></div>
+        </div>
+
+        <ol id="lista-slots" class="lista-slots"></ol>
+
+        <!-- Única entrada do jogo: só se digita pra resolver um DUVIDO -->
+        <form id="form-duvido" class="linha-duvido" autocomplete="off">
+            <input type="text" id="input-palavra" placeholder="Palavra duvidada…"
+                   name="duvido-sem-sugestao" autocomplete="off" autocorrect="off"
+                   autocapitalize="off" spellcheck="false">
+            <button type="submit" class="btn-duvidar">DUVIDAR</button>
+        </form>
+
+        <div id="placar" class="placar"></div>
+
+        <div class="linha-secundaria">
+            <button id="btn-encerrar" class="btn-secundario">🏁 Revelar tudo e encerrar rodada</button>
+            <button id="btn-pular" class="btn-secundario">⏭️ Pular tema</button>
+        </div>
+    </div>
+
+    <!-- ================= TELA 4: FIM DE RODADA ================= -->
+    <div class="tela tela-scroll escondido" id="tela-rodada">
+        <h1>📋 Lista completa</h1>
+        <div id="rodada-tema" class="subtitulo"></div>
+        <ol id="lista-final" class="lista-final"></ol>
+        <p id="rodada-fonte" class="fonte"></p>
+        <button id="btn-proximo-tema" class="btn-principal">PRÓXIMO TEMA →</button>
+    </div>
+
+    <!-- ================= TELA 5: FIM DE JOGO ================= -->
+    <div class="tela tela-scroll escondido" id="tela-vitoria">
+        <div class="trofeu">🏆</div>
+        <h1 id="nome-vencedor"></h1>
+        <p class="subtitulo">Último de pé — venceu o Duvido!</p>
+
+        <!-- A rodada foi interrompida pela vitória: revela a lista que estava na mesa -->
+        <p class="rotulo-config">📋 A lista era…</p>
+        <div id="vitoria-tema" class="subtitulo"></div>
+        <ol id="lista-final-vitoria" class="lista-final"></ol>
+        <p id="vitoria-fonte" class="fonte"></p>
+
+        <button id="btn-revanche" class="btn-principal">JOGAR DE NOVO</button>
+        <button id="btn-novos-jogadores" class="btn-secundario">Trocar jogadores</button>
+    </div>
+
+    <!-- ============ TELA 3: OVERLAY DO VEREDITO ============ -->
+    <div class="overlay escondido" id="overlay">
+        <!-- Confirmação de fuzzy: "Você quis dizer…?" -->
+        <div class="overlay-conteudo escondido" id="ov-confirmar">
+            <div class="ov-pergunta">Você quis dizer<br><span id="ov-sugestao"></span>?</div>
+            <div class="ov-botoes-sim-nao">
+                <button id="btn-sim" class="btn-sim">SIM</button>
+                <button id="btn-nao" class="btn-nao">NÃO</button>
+            </div>
+        </div>
+
+        <!-- Veredito -->
+        <div class="overlay-conteudo escondido" id="ov-veredito">
+            <div id="ov-emoji" class="ov-emoji"></div>
+            <div id="ov-titulo" class="ov-titulo"></div>
+            <div id="ov-item" class="ov-item"></div>
+            <div id="ov-subtitulo" class="ov-subtitulo"></div>
+            <div id="ov-jogadores" class="ov-jogadores"></div>
+            <button id="btn-ninguem" class="btn-ninguem">Ninguém perde vida</button>
+            <button id="btn-voltar-jogo" class="btn-principal escondido">VOLTAR AO JOGO</button>
+        </div>
+    </div>
+
+    <!-- Banco de temas (dado puro — edite este arquivo pra adicionar temas) -->
+    <script src="temas.js"></script>
+    <!-- Motor de reconhecimento de palavras (funções puras, testável em testes.html) -->
+    <script src="motor.js"></script>
+    <!-- Lógica do jogo -->
+    <script src="jogo.js"></script>
+</body>
+</html>

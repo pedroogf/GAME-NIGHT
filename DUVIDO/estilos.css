@@ -1,0 +1,599 @@
+/* ============================================================
+   DUVIDO — estilos
+   Celular no meio da mesa: fundo escuro, contraste alto,
+   tipografia grande, legível a um metro de distância.
+   ============================================================ */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    background-color: #0e0e12;
+    color: #ffffff;
+    touch-action: manipulation;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+input, textarea {
+    -webkit-user-select: text;
+    user-select: text;
+}
+
+.escondido {
+    display: none !important;
+}
+
+/* ================= TELAS COM SCROLL (setup, fim de rodada, vitória) ================= */
+
+.tela-scroll {
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding: 20px;
+    max-width: 500px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+h1 {
+    font-size: 1.9rem;
+    color: #2dd4bf;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 0 0 12px rgba(45, 212, 191, 0.45);
+}
+
+.subtitulo {
+    color: #aaa;
+    font-size: 1rem;
+    margin-top: -6px;
+}
+
+.link-hub {
+    align-self: flex-start;
+    color: #888;
+    text-decoration: none;
+    font-size: 0.9rem;
+    padding: 8px 14px;
+    border-radius: 20px;
+    border: 1px solid #333;
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.link-hub:active {
+    transform: scale(0.97);
+}
+
+.regras-box {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid #2a2a33;
+    border-radius: 14px;
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 0.92rem;
+    color: #ccc;
+    text-align: left;
+}
+
+.rotulo-config {
+    color: #888;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 6px;
+}
+
+/* ---------- setup: adicionar jogadores ---------- */
+
+.linha-add {
+    display: flex;
+    gap: 8px;
+    width: 100%;
+}
+
+.linha-add input {
+    flex: 1;
+    background: #1a1a22;
+    border: 1px solid #333;
+    border-radius: 12px;
+    color: #fff;
+    font-size: 1.05rem;
+    padding: 12px 14px;
+    outline: none;
+}
+
+.linha-add input:focus {
+    border-color: #2dd4bf;
+}
+
+.btn-add {
+    width: 52px;
+    border: none;
+    border-radius: 12px;
+    background: #2dd4bf;
+    color: #0e0e12;
+    font-size: 1.6rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.btn-add:active {
+    transform: scale(0.95);
+}
+
+.lista-jogadores {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    width: 100%;
+}
+
+.tag-jogador {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #1a1a22;
+    border: 1px solid #333;
+    border-radius: 20px;
+    padding: 8px 8px 8px 14px;
+    font-size: 1rem;
+}
+
+.tag-jogador button {
+    background: #2a2a33;
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    color: #f87171;
+    font-size: 0.9rem;
+    line-height: 1;
+    cursor: pointer;
+}
+
+/* ---------- setup: vidas ---------- */
+
+.chips-vidas {
+    display: flex;
+    gap: 10px;
+}
+
+.chip-vida {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    border: 2px solid #333;
+    background: #1a1a22;
+    color: #ccc;
+    font-size: 1.3rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.chip-vida.selecionado {
+    border-color: #f87171;
+    background: rgba(248, 113, 113, 0.15);
+    color: #f87171;
+}
+
+/* ---------- botões genéricos ---------- */
+
+.btn-principal {
+    width: 100%;
+    max-width: 400px;
+    padding: 16px;
+    border: none;
+    border-radius: 14px;
+    background: #2dd4bf;
+    color: #0e0e12;
+    font-size: 1.2rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    cursor: pointer;
+    margin-top: 8px;
+}
+
+.btn-principal:disabled {
+    background: #2a2a33;
+    color: #666;
+}
+
+.btn-principal:active:not(:disabled) {
+    transform: scale(0.97);
+}
+
+.btn-secundario {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid #333;
+    border-radius: 12px;
+    color: #aaa;
+    font-size: 0.85rem;
+    padding: 10px 12px;
+    cursor: pointer;
+}
+
+.btn-secundario:active {
+    transform: scale(0.97);
+}
+
+/* ================= TELA DE JOGO — 100dvh, SEM SCROLL ================= */
+
+.tela-jogo {
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 10px 14px 12px;
+    max-width: 500px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.tema-box {
+    text-align: center;
+    padding: 6px 0 2px;
+}
+
+.tema-rotulo {
+    color: #2dd4bf;
+    font-size: 0.7rem;
+    letter-spacing: 3px;
+}
+
+.tema-titulo {
+    font-size: clamp(1.15rem, 5.5vw, 1.5rem);
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+/* ---------- os 10 slots ---------- */
+
+.lista-slots {
+    list-style: none;
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 3px;
+}
+
+.slot {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.035);
+    border: 1px solid #23232c;
+    border-radius: 10px;
+    padding: 0 12px;
+    font-size: clamp(0.95rem, 4.2vw, 1.15rem);
+}
+
+.slot .num {
+    color: #2dd4bf;
+    font-weight: 800;
+    width: 1.6em;
+    text-align: right;
+    flex-shrink: 0;
+}
+
+.slot .valor {
+    color: #444;
+    letter-spacing: 3px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.slot.revelado {
+    background: rgba(45, 212, 191, 0.12);
+    border-color: rgba(45, 212, 191, 0.5);
+}
+
+.slot.revelado .valor {
+    color: #fff;
+    font-weight: 700;
+    letter-spacing: 0;
+}
+
+.slot.novo {
+    animation: pulsar 0.7s ease 2;
+}
+
+@keyframes pulsar {
+    50% { background: rgba(45, 212, 191, 0.35); }
+}
+
+/* ---------- entrada do duvido ---------- */
+
+.linha-duvido {
+    display: flex;
+    gap: 8px;
+}
+
+.linha-duvido input {
+    flex: 1;
+    min-width: 0;
+    background: #1a1a22;
+    border: 1px solid #333;
+    border-radius: 12px;
+    color: #fff;
+    font-size: 1.05rem; /* ≥16px: evita zoom automático do iOS no foco */
+    padding: 13px 14px;
+    outline: none;
+}
+
+.linha-duvido input:focus {
+    border-color: #2dd4bf;
+}
+
+.btn-duvidar {
+    border: none;
+    border-radius: 12px;
+    background: #f87171;
+    color: #0e0e12;
+    font-size: 1rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    padding: 0 18px;
+    cursor: pointer;
+}
+
+.btn-duvidar:active {
+    transform: scale(0.96);
+}
+
+/* ---------- placar ---------- */
+
+.placar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    justify-content: center;
+}
+
+.chip-jogador {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: #1a1a22;
+    border: 1px solid #2a2a33;
+    border-radius: 16px;
+    padding: 5px 12px;
+    font-size: 0.85rem;
+}
+
+.chip-jogador .coracoes {
+    color: #f87171;
+    letter-spacing: 1px;
+    font-size: 0.8rem;
+}
+
+.chip-jogador .coracoes .vazio {
+    color: #3a3a44;
+}
+
+.chip-jogador.eliminado {
+    opacity: 0.45;
+}
+
+.chip-jogador.eliminado .nome {
+    text-decoration: line-through;
+}
+
+.linha-secundaria {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+}
+
+.linha-secundaria .btn-secundario {
+    flex: 1;
+}
+
+/* ================= OVERLAY DO VEREDITO ================= */
+
+.overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: #0e0e12;
+}
+
+/* O veredito toma a tela INTEIRA — verde, vermelho ou neutro */
+.overlay.na-lista    { background: #14532d; }
+.overlay.fora        { background: #7f1d1d; }
+.overlay.ja-revelado { background: #27272f; }
+.overlay.confirmar   { background: #1e293b; }
+
+.overlay-conteudo {
+    width: 100%;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    text-align: center;
+}
+
+.ov-emoji {
+    font-size: 4rem;
+    line-height: 1;
+}
+
+.ov-titulo {
+    font-size: clamp(1.9rem, 9vw, 2.8rem);
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: 1px;
+}
+
+.ov-item {
+    font-size: clamp(1.2rem, 6vw, 1.6rem);
+    font-weight: 700;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    padding: 8px 18px;
+}
+
+.ov-subtitulo {
+    font-size: 1.05rem;
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.ov-jogadores {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    width: 100%;
+}
+
+.btn-perdedor {
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    border-radius: 14px;
+    background: rgba(0, 0, 0, 0.25);
+    color: #fff;
+    font-size: 1.15rem;
+    font-weight: 700;
+    padding: 14px 20px;
+    cursor: pointer;
+}
+
+.btn-perdedor:active {
+    transform: scale(0.95);
+    background: rgba(0, 0, 0, 0.45);
+}
+
+.btn-ninguem {
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 0.85rem;
+    text-decoration: underline;
+    padding: 8px;
+    cursor: pointer;
+    margin-top: 4px;
+}
+
+/* ---------- confirmação de fuzzy ---------- */
+
+.ov-pergunta {
+    font-size: clamp(1.5rem, 7vw, 2rem);
+    font-weight: 700;
+    line-height: 1.35;
+}
+
+.ov-pergunta span {
+    color: #fbbf24;
+    font-weight: 900;
+}
+
+.ov-botoes-sim-nao {
+    display: flex;
+    gap: 14px;
+    width: 100%;
+    max-width: 380px;
+}
+
+.btn-sim, .btn-nao {
+    flex: 1;
+    padding: 18px;
+    border: none;
+    border-radius: 14px;
+    font-size: 1.3rem;
+    font-weight: 900;
+    cursor: pointer;
+}
+
+.btn-sim {
+    background: #22c55e;
+    color: #0e0e12;
+}
+
+.btn-nao {
+    background: #ef4444;
+    color: #fff;
+}
+
+.btn-sim:active, .btn-nao:active {
+    transform: scale(0.96);
+}
+
+/* ================= FIM DE RODADA / VITÓRIA ================= */
+
+.lista-final {
+    list-style: none;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.lista-final li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid #23232c;
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 1.05rem;
+    text-align: left;
+}
+
+.lista-final li .num {
+    color: #2dd4bf;
+    font-weight: 800;
+    width: 1.6em;
+    text-align: right;
+    flex-shrink: 0;
+}
+
+.lista-final li.descoberto {
+    border-color: rgba(45, 212, 191, 0.5);
+    background: rgba(45, 212, 191, 0.1);
+}
+
+.lista-final li .marcador {
+    margin-left: auto;
+    font-size: 0.9rem;
+}
+
+.fonte {
+    color: #777;
+    font-size: 0.85rem;
+    font-style: italic;
+    margin-top: -6px;
+}
+
+.trofeu {
+    font-size: 5rem;
+    margin-top: 4vh;
+    animation: pular 1s ease infinite;
+}
+
+@keyframes pular {
+    50% { transform: translateY(-12px); }
+}

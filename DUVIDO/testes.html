@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Duvido — testes do motor</title>
+    <style>
+        body { background: #0e0e12; color: #fff; font-family: 'Segoe UI', sans-serif; padding: 20px; max-width: 640px; margin: 0 auto; }
+        h1 { color: #2dd4bf; font-size: 1.4rem; margin-bottom: 4px; }
+        p  { color: #888; font-size: 0.9rem; margin-bottom: 16px; }
+        .teste { padding: 10px 14px; border-radius: 10px; margin-bottom: 6px; font-size: 0.95rem; border: 1px solid #2a2a33; }
+        .ok    { background: rgba(34, 197, 94, 0.12); border-color: rgba(34, 197, 94, 0.5); }
+        .falha { background: rgba(239, 68, 68, 0.15); border-color: rgba(239, 68, 68, 0.6); }
+        .resumo { font-size: 1.2rem; font-weight: 800; margin-top: 16px; }
+    </style>
+</head>
+<body>
+    <h1>🧪 Duvido — testes do motor</h1>
+    <p>Roda no navegador, sem Node. Abra o console pra ver os avisos do validarBanco().</p>
+    <div id="resultados"></div>
+    <div id="resumo" class="resumo"></div>
+
+    <script src="temas.js"></script>
+    <script src="motor.js"></script>
+    <script>
+        const resultados = document.getElementById("resultados");
+        let total = 0, passou = 0;
+
+        function teste(nome, condicao) {
+            total++;
+            if (condicao) passou++;
+            const div = document.createElement("div");
+            div.className = "teste " + (condicao ? "ok" : "falha");
+            div.textContent = (condicao ? "✅ " : "❌ ") + nome;
+            resultados.appendChild(div);
+        }
+
+        // Banco de exemplo: tema 1 = marcas (Coca-Cola na posição 7, Apple na 1)
+        const marcas = TEMAS.find((t) => t.id === "marcas-valiosas");
+        const nada = new Set();
+
+        /* --- critério 1: variações de escrita dão o mesmo resultado --- */
+        const r1a = julgar("coca cola", marcas, nada);
+        const r1b = julgar("Coca-Cola", marcas, nada);
+        const r1c = julgar("cocacola", marcas, nada);
+        teste("critério 1: 'coca cola', 'Coca-Cola' e 'cocacola' dão o mesmo resultado (na-lista #7)",
+            r1a.tipo === "na-lista" && r1b.tipo === "na-lista" && r1c.tipo === "na-lista" &&
+            r1a.item.posicao === 7 && r1b.item.posicao === 7 && r1c.item.posicao === 7);
+
+        /* --- alias --- */
+        const rAlias = julgar("coke", marcas, nada);
+        teste("alias: 'coke' encontra Coca-Cola",
+            rAlias.tipo === "na-lista" && rAlias.item.resposta === "Coca-Cola");
+
+        /* --- critério 2: typo vira pergunta, nunca veredito direto --- */
+        const r2 = julgar("Aple", marcas, nada);
+        teste("critério 2: 'Aple' vira pergunta 'você quis dizer Apple?' (fuzzy), não julgamento",
+            r2.tipo === "fuzzy" && r2.item.resposta === "Apple");
+
+        const r2b = julgar("Microsofte", marcas, nada);
+        teste("fuzzy 6+ letras: 'Microsofte' sugere Microsoft (distância ≤ 2)",
+            r2b.tipo === "fuzzy" && r2b.item.resposta === "Microsoft");
+
+        const r2c = julgar("bnw", marcas, nada);
+        teste("fuzzy curto: 'bnw' sugere BMW (distância ≤ 1 abaixo de 6 letras)",
+            r2c.tipo === "fuzzy" && r2c.item.resposta === "BMW");
+
+        /* --- critério 4: item já revelado não tira vida --- */
+        const reveladas = new Set([7]); // Coca-Cola já está na mesa
+        const r4 = julgar("coca cola", marcas, reveladas);
+        teste("critério 4: digitar item já revelado dá 'ja-revelado' (ninguém perde vida)",
+            r4.tipo === "ja-revelado");
+
+        const r4b = julgar("Aple", marcas, new Set([1]));
+        teste("fuzzy de item já revelado: confirmar 'Aple'→Apple com Apple revelada não pune",
+            r4b.tipo === "fuzzy"); // a checagem de revelado acontece no SIM da confirmação
+
+        /* --- palavra fora da lista --- */
+        const rFora = julgar("Nubank", marcas, nada);
+        teste("'Nubank' não está na lista → fora (quem falou perde vida)",
+            rFora.tipo === "fora");
+
+        /* --- normalização: artigo inicial e acentos --- */
+        teste("normalização: 'O Boticário' → 'boticario' (artigo + acento)",
+            normalizar("O Boticário") === "boticario");
+        teste("normalização: 'nescafé' = 'nescafe'",
+            normalizar("nescafé") === normalizar("nescafe"));
+        teste("normalização: 'McDonald's' = 'mc donalds'",
+            normalizar("McDonald's") === normalizar("mc donalds"));
+
+        const paises = TEMAS.find((t) => t.id === "paises-populosos");
+        const rIndia = julgar("índia", paises, nada);
+        teste("acentos no banco: 'índia' e 'India' encontram Índia",
+            rIndia.tipo === "na-lista" && julgar("India", paises, nada).tipo === "na-lista");
+
+        /* --- entrada vazia é ignorada --- */
+        teste("entrada vazia/só espaços é ignorada (retorna null)",
+            julgar("   ", marcas, nada) === null);
+
+        /* --- validarBanco roda sem explodir (avisos vão pro console) --- */
+        let bancoOk = true;
+        try { validarBanco(); } catch (e) { bancoOk = false; }
+        teste("validarBanco() roda sem erro", bancoOk);
+
+        const resumo = document.getElementById("resumo");
+        resumo.textContent = passou === total
+            ? `🎉 ${passou}/${total} testes passaram`
+            : `💥 ${passou}/${total} — TEM TESTE FALHANDO`;
+        resumo.style.color = passou === total ? "#22c55e" : "#ef4444";
+        document.title = (passou === total ? "PASS " : "FAIL ") + `${passou}/${total} — Duvido testes`;
+    </script>
+</body>
+</html>

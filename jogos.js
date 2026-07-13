@@ -77,6 +77,15 @@ const JOGOS = [
     cor: "#A855F7",
     link: "LETRA-QUENTE/index.html",
     chave: "letra-quente"
+  },
+  {
+    emoji: "🤥",
+    nome: "Duvido",
+    descricao: "Fale itens do top 10, blefe à vontade — e grite DUVIDO pra caçar mentira!",
+    jogadores: "2+ jogadores",
+    cor: "#2DD4BF",
+    link: "DUVIDO/index.html",
+    chave: "duvido"
   }
 
   // 👉 Novo jogo? Adicione uma vírgula acima e cole um bloco aqui.

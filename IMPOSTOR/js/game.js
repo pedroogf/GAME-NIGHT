@@ -393,12 +393,9 @@ function finishGame(){
   const vbox = document.getElementById('vencedor-box');
   if(state.nomesReais){
     state.vencedorRegistrado = false;
+    state.ultimoRegistro = [];
     vbox.style.display = 'block';
-    vbox.innerHTML = `<div class="big">🏆 Quem levou a melhor?</div>
-      <div class="btn-row" style="margin-top:12px;">
-        <button class="btn ghost" onclick="registrarVencedor('impostor')">🎭 Impostor</button>
-        <button class="btn ghost" onclick="registrarVencedor('grupo')">👥 Grupo</button>
-      </div>`;
+    mostrarCaixaVencedor();
   } else {
     vbox.style.display = 'none';
   }
@@ -407,21 +404,97 @@ function finishGame(){
 }
 
 
-// Soma pontos no ranking: impostor que escapa vale +2, grupo que acerta +1 cada
-function registrarVencedor(quem){
+function mostrarCaixaVencedor(){
+  const vbox = document.getElementById('vencedor-box');
+  // Nos modos Dupla e Undercover, a vitória do impostor pergunta quem foi enganado
+  const impostorAction = (state.mode === 'dupla' || state.mode === 'undercover')
+    ? 'mostrarSelecaoEnganados()' : "registrarVencedor('impostor')";
+  vbox.innerHTML = `<div class="big">🏆 Quem levou a melhor?</div>
+    <div class="btn-row" style="margin-top:12px;">
+      <button class="btn ghost" onclick="${impostorAction}">🎭 Impostor</button>
+      <button class="btn ghost" onclick="registrarVencedor('grupo')">👥 Grupo</button>
+    </div>`;
+}
+
+
+// Dupla/Undercover: antes de pontuar a vitória do impostor, pergunta quem
+// foi enganado (protegeu o impostor) para não pontuar essa pessoa.
+function mostrarSelecaoEnganados(){
+  const vbox = document.getElementById('vencedor-box');
+  const normais = state.players.filter(p=>state.assignments[p.id].role==='normal');
+  const titulo = state.mode === 'undercover'
+    ? '🥸 Quem protegeu o impostor?'
+    : '🎭 Quem apertou a mão do impostor?';
+  const descricao = state.mode === 'undercover'
+    ? 'Marque quem votou errado e deixou o impostor escapar (esses não pontuam). Quem não for marcado ganha 1 ponto normalmente.'
+    : 'Marque quem foi enganado (esses não pontuam). Quem não for marcado ganha 1 ponto normalmente.';
+
+  vbox.innerHTML = `<div class="big">${titulo}</div>
+    <div style="margin-top:6px; font-size:13px; color:var(--text-dim);">${descricao}</div>
+    <div class="roster" id="enganados-list" style="margin-top:10px;"></div>
+    <div class="btn-row" style="margin-top:12px;">
+      <button class="btn ghost" onclick="mostrarCaixaVencedor()">Voltar</button>
+      <button class="btn" onclick="confirmarVitoriaImpostor()">Confirmar</button>
+    </div>`;
+
+  const list = document.getElementById('enganados-list');
+  normais.forEach(p=>{
+    const chip = document.createElement('div');
+    chip.className = 'chip selectable';
+    chip.textContent = p.name;
+    chip.dataset.id = p.id;
+    chip.onclick = () => chip.classList.toggle('selected');
+    list.appendChild(chip);
+  });
+}
+
+
+function confirmarVitoriaImpostor(){
+  const enganadosIds = Array.from(document.querySelectorAll('#enganados-list .chip.selected')).map(el=>el.dataset.id);
+  registrarVencedor('impostor', enganadosIds);
+}
+
+
+// Soma pontos no ranking: impostor que escapa vale +2, grupo que acerta +1 cada.
+// Na Dupla/Undercover, quem foi enganado pelo impostor (enganadosIds) não pontua.
+// Guarda o que foi somado em state.ultimoRegistro para permitir desfazer.
+function registrarVencedor(quem, enganadosIds){
   if(state.vencedorRegistrado) return;
   state.vencedorRegistrado = true;
+  const enganados = new Set(enganadosIds || []);
+  const temEnganados = state.mode === 'dupla' || state.mode === 'undercover';
+  state.ultimoRegistro = [];
 
   state.players.forEach(p=>{
     const a = state.assignments[p.id];
-    if(quem === 'impostor' && a.role === 'impostor') GameNight.adicionarPontos('impostor', p.name, 2);
-    if(quem === 'grupo' && a.role === 'normal') GameNight.adicionarPontos('impostor', p.name, 1);
+    let qtd = 0;
+    if(quem === 'impostor' && a.role === 'impostor') qtd = 2;
+    if(quem === 'grupo' && a.role === 'normal') qtd = 1;
+    if(quem === 'impostor' && a.role === 'normal' && temEnganados && !enganados.has(p.id)) qtd = 1;
+    if(qtd){
+      GameNight.adicionarPontos('impostor', p.name, qtd);
+      state.ultimoRegistro.push({ nome: p.name, qtd });
+    }
   });
 
+  const msg = quem === 'impostor'
+    ? (temEnganados
+        ? '🎭 +2 para o(s) impostor(es), +1 para quem não foi enganado!'
+        : '🎭 +2 pontos para cada impostor no ranking!')
+    : '👥 +1 ponto para cada jogador do grupo!';
+
   const vbox = document.getElementById('vencedor-box');
-  vbox.innerHTML = quem === 'impostor'
-    ? '<div class="big">🎭 +2 pontos para cada impostor no ranking!</div>'
-    : '<div class="big">👥 +1 ponto para cada jogador do grupo!</div>';
+  vbox.innerHTML = `<div class="big">${msg}</div>
+    <button class="btn ghost" style="margin-top:12px;" onclick="desfazerVencedor()">↩️ Registrei errado, desfazer</button>`;
+}
+
+
+// Remove os pontos da última rodada registrada e volta para a escolha do vencedor
+function desfazerVencedor(){
+  (state.ultimoRegistro || []).forEach(r => GameNight.adicionarPontos('impostor', r.nome, -r.qtd));
+  state.ultimoRegistro = [];
+  state.vencedorRegistrado = false;
+  mostrarCaixaVencedor();
 }
 
 
