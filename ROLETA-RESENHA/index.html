@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Roleta da Resenha — gire as roletas e solte a resenha com a galera!">
+<title>Roleta da Resenha</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Fundo animado -->
+<div class="fundo" aria-hidden="true">
+    <span class="blob b1"></span>
+    <span class="blob b2"></span>
+    <span class="blob b3"></span>
+</div>
+
+<main id="app">
+
+<!-- ================= 1. TELA INICIAL ================= -->
+<section class="tela ativa" id="tela-inicio" aria-label="Tela inicial">
+    <a href="../index.html" class="link-hub">← Game Night</a>
+    <div class="logo-emoji" aria-hidden="true">🎡</div>
+    <h1 class="titulo-jogo">Roleta da <span class="grad">Resenha</span></h1>
+    <p class="subtitulo">Gire as duas roletas: uma sorteia a pessoa, a outra sorteia o que você vai ter que falar (ou fazer) sobre ela!</p>
+
+    <div class="pilha-botoes">
+        <button class="btn btn-primario" id="btn-jogar">🎮 Jogar</button>
+        <button class="btn btn-sec" id="btn-continuar-partida" hidden>▶️ Continuar partida</button>
+        <button class="btn btn-sec" id="btn-como">📖 Como jogar</button>
+        <button class="btn btn-sec" id="btn-config-inicio">⚙️ Configurações</button>
+    </div>
+
+    <p class="aviso-rodape">🔞 O modo com bebida é só para maiores de idade. Beba com responsabilidade — ninguém deve ser pressionado a beber!</p>
+</section>
+
+<!-- ================= 2. COMO JOGAR ================= -->
+<section class="tela" id="tela-como" aria-label="Como jogar">
+    <button class="btn-voltar" data-volta="tela-inicio">← Voltar</button>
+    <h2>📖 Como jogar</h2>
+
+    <div class="card">
+        <h3>🎯 A ideia</h3>
+        <p>Um celular só, todo mundo na roda. Em cada rodada o app mostra <b>quem é o jogador da vez</b> e gira duas roletas: uma com os <b>nomes</b> e outra com <b>cores</b>. O jogador da vez cumpre a ação da cor em relação à pessoa sorteada (nunca ele mesmo).</p>
+    </div>
+
+    <div class="card">
+        <h3>🔵🔴 Modo clássico</h3>
+        <p><span class="ponto azul"></span><b>Azul — Elogio:</b> fale uma qualidade ou algo que admira na pessoa sorteada.</p>
+        <p><span class="ponto vermelho"></span><b>Vermelho — Crítica:</b> fale um defeito, mania irritante ou algo que ela poderia melhorar.</p>
+    </div>
+
+    <div class="card">
+        <h3>🌪️ Roleta do Caos</h3>
+        <p>Todas as cores entram em jogo, cada uma com uma missão:</p>
+        <ul class="lista-cores" id="lista-cores-como"></ul>
+    </div>
+
+    <div class="card card-atencao">
+        <h3>🤝 Regra de ouro</h3>
+        <p>As críticas são <b>brincadeira entre amigos</b>. Evite aparência, traumas, assuntos sensíveis e ataques pessoais. Se alguém pedir pra parar, respeite. A resenha só é boa se todo mundo estiver rindo junto.</p>
+    </div>
+
+    <div class="card card-atencao">
+        <h3>🍺 Consumo responsável</h3>
+        <p>O modo com bebida é destinado <b>apenas a maiores de idade</b>. Ninguém deve ser pressionado a beber — sempre dá pra trocar por uma prenda ou passar a vez. Se for beber, não dirija.</p>
+    </div>
+</section>
+
+<!-- ================= 3. CADASTRO DE JOGADORES ================= -->
+<section class="tela" id="tela-jogadores" aria-label="Cadastro de jogadores">
+    <button class="btn-voltar" data-volta="tela-inicio">← Voltar</button>
+    <h2>👥 Quem tá na roda?</h2>
+    <p class="dica">Mínimo 3 e máximo 20 jogadores.</p>
+
+    <form id="form-jogador" class="linha-add">
+        <label class="sr-only" for="campo-nome">Nome do jogador</label>
+        <input type="text" id="campo-nome" maxlength="18" placeholder="Nome do jogador" autocomplete="off">
+        <button type="submit" class="btn btn-primario btn-add" aria-label="Adicionar jogador">＋</button>
+    </form>
+
+    <p class="contador" id="qtd-jogadores" aria-live="polite">0 jogadores</p>
+
+    <ul id="lista-jogadores" class="lista-jogadores" aria-label="Lista de jogadores"></ul>
+
+    <div class="pilha-botoes">
+        <button class="btn btn-primario" id="btn-continuar-jogadores" disabled>Continuar →</button>
+        <button class="btn btn-ghost" id="btn-limpar-jogadores">🗑️ Apagar todos</button>
+    </div>
+</section>
+
+<!-- ================= 4. ESCOLHA DO MODO ================= -->
+<section class="tela" id="tela-modo" aria-label="Escolha do modo de jogo">
+    <button class="btn-voltar" data-volta="tela-jogadores">← Voltar</button>
+    <h2>🕹️ Escolha o modo</h2>
+
+    <button class="card card-modo" data-modo="classico" aria-pressed="false">
+        <span class="emoji-modo" aria-hidden="true">🔵🔴</span>
+        <span class="txt-modo">
+            <b>Azul ou Vermelho</b>
+            <small>O clássico: elogio ou crítica. Simples e mortal.</small>
+        </span>
+    </button>
+
+    <button class="card card-modo" data-modo="caos" aria-pressed="false">
+        <span class="emoji-modo emoji-arcoiris" aria-hidden="true">🌈</span>
+        <span class="txt-modo">
+            <b>Roleta do Caos</b>
+            <small>10 cores, 10 missões: histórias, imitações, sinceridade e eventos malucos.</small>
+        </span>
+    </button>
+
+    <div class="pilha-botoes">
+        <button class="btn btn-primario" id="btn-continuar-modo">Continuar →</button>
+    </div>
+</section>
+
+<!-- ================= 5. BEBIDA / CONSEQUÊNCIAS ================= -->
+<section class="tela" id="tela-bebida" aria-label="Configuração de bebida e consequências">
+    <button class="btn-voltar" data-volta="tela-modo">← Voltar</button>
+    <h2>🍻 Com ou sem bebida?</h2>
+
+    <div class="grupo-chips" id="chips-bebida" role="radiogroup" aria-label="Tipo de consequência">
+        <button class="chip chip-bebida" data-bebida="com">🍺 Com bebida</button>
+        <button class="chip chip-bebida" data-bebida="sem">🎯 Sem bebida</button>
+        <button class="chip chip-bebida" data-bebida="conversa">💬 Só conversa</button>
+    </div>
+
+    <div class="card" id="box-com-bebida" hidden>
+        <h3>🥃 O que vale no vermelho?</h3>
+        <div class="grupo-chips" id="chips-shot" role="radiogroup" aria-label="Consequência do vermelho">
+            <button class="chip chip-shot" data-shot="1">1 gole</button>
+            <button class="chip chip-shot" data-shot="2">2 goles</button>
+            <button class="chip chip-shot" data-shot="3">3 goles</button>
+            <button class="chip chip-shot" data-shot="shot">Shot 🥃</button>
+        </div>
+        <p class="aviso-mini">🔞 Só para maiores de idade. Ninguém deve ser pressionado a beber — sempre dá pra trocar por prenda.</p>
+    </div>
+
+    <div class="card" id="box-sem-bebida" hidden>
+        <h3>🎯 Consequência sem bebida</h3>
+        <div class="grupo-chips" id="chips-sem" role="radiogroup" aria-label="Tipo de consequência sem bebida">
+            <button class="chip chip-sem" data-sem="pontos">🏆 Pontos</button>
+            <button class="chip chip-sem" data-sem="prendas">🎭 Prendas</button>
+            <button class="chip chip-sem" data-sem="desafios">🔥 Desafios</button>
+            <button class="chip chip-sem" data-sem="rodada">⏭️ Perde rodada</button>
+        </div>
+    </div>
+
+    <div class="card" id="box-intensidade" hidden>
+        <h3>🌡️ Intensidade das consequências</h3>
+        <div class="grupo-chips" id="chips-int" role="radiogroup" aria-label="Intensidade">
+            <button class="chip chip-int" data-int="leve">😌 Leve</button>
+            <button class="chip chip-int" data-int="media">🙂 Média</button>
+            <button class="chip chip-int" data-int="pesada">😈 Pesada</button>
+        </div>
+    </div>
+
+    <div class="pilha-botoes">
+        <button class="btn btn-primario" id="btn-continuar-bebida">Continuar →</button>
+    </div>
+</section>
+
+<!-- ================= 6. DIFICULDADE / CORES ================= -->
+<section class="tela" id="tela-dificuldade" aria-label="Nível de dificuldade">
+    <button class="btn-voltar" data-volta="tela-bebida">← Voltar</button>
+    <h2 id="titulo-dificuldade">⚖️ Dificuldade</h2>
+
+    <!-- Bloco do modo clássico -->
+    <div id="bloco-classico" hidden>
+        <div class="grupo-chips coluna" id="chips-dif" role="radiogroup" aria-label="Nível de dificuldade">
+            <button class="chip chip-dif" data-dif="leve">😌 Leve <small>80% azul · 20% vermelho</small></button>
+            <button class="chip chip-dif" data-dif="resenha">😄 Resenha <small>65% azul · 35% vermelho</small></button>
+            <button class="chip chip-dif" data-dif="pesado">🔥 Pesado <small>45% azul · 55% vermelho</small></button>
+            <button class="chip chip-dif" data-dif="caos">💀 Caos <small>25% azul · 75% vermelho</small></button>
+            <button class="chip chip-dif" data-dif="custom">🎛️ Personalizado <small>você escolhe as chances</small></button>
+        </div>
+
+        <div class="card" id="box-personalizado" hidden>
+            <label for="slider-azul"><b>Chance de azul:</b> <span id="pct-azul">65%</span> · <b>vermelho:</b> <span id="pct-vermelho">35%</span></label>
+            <input type="range" id="slider-azul" min="5" max="95" step="5" value="65" aria-label="Porcentagem de azul">
+            <div class="barra-duo" aria-hidden="true"><span id="barra-azul"></span></div>
+            <p class="aviso-mini">A soma é sempre 100% — o vermelho se ajusta sozinho.</p>
+        </div>
+    </div>
+
+    <!-- Bloco da Roleta do Caos -->
+    <div id="bloco-caos" hidden>
+        <p class="dica">Toque numa cor para ativar ou desativar. As chances se redistribuem sozinhas.</p>
+        <div id="grade-cores" class="grade-cores" aria-label="Cores da roleta"></div>
+    </div>
+
+    <label class="ajuste card">
+        <span><b>🌪️ Caos crescente</b><small>A cada 5 rodadas, vermelho, preto e arco-íris ficam mais prováveis.</small></span>
+        <input type="checkbox" id="toggle-caos-crescente" class="toggle">
+    </label>
+
+    <div class="pilha-botoes">
+        <button class="btn btn-primario" id="btn-continuar-dificuldade">Continuar →</button>
+    </div>
+</section>
+
+<!-- ================= 7. CONFIGURAÇÕES AVANÇADAS ================= -->
+<section class="tela" id="tela-avancadas" aria-label="Configurações avançadas">
+    <button class="btn-voltar" id="btn-voltar-avancadas" data-volta="tela-dificuldade">← Voltar</button>
+    <h2>⚙️ Configurações</h2>
+
+    <div class="card">
+        <h3>🔁 Rodadas</h3>
+        <div class="grupo-chips" id="chips-rodadas" role="radiogroup" aria-label="Número de rodadas">
+            <button class="chip chip-rodadas" data-rodadas="5">5</button>
+            <button class="chip chip-rodadas" data-rodadas="10">10</button>
+            <button class="chip chip-rodadas" data-rodadas="15">15</button>
+            <button class="chip chip-rodadas" data-rodadas="20">20</button>
+            <button class="chip chip-rodadas" data-rodadas="30">30</button>
+            <button class="chip chip-rodadas" data-rodadas="0">∞ Infinita</button>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>⏱️ Cronômetro</h3>
+        <label class="ajuste">
+            <span>Ativar cronômetro<small>Começa a contar depois que as roletas param.</small></span>
+            <input type="checkbox" id="toggle-cronometro" class="toggle">
+        </label>
+        <div class="grupo-chips" id="chips-tempo" role="radiogroup" aria-label="Tempo para responder">
+            <button class="chip chip-tempo" data-tempo="10">10s</button>
+            <button class="chip chip-tempo" data-tempo="15">15s</button>
+            <button class="chip chip-tempo" data-tempo="20">20s</button>
+            <button class="chip chip-tempo" data-tempo="30">30s</button>
+            <button class="chip chip-tempo" data-tempo="45">45s</button>
+            <button class="chip chip-tempo" data-tempo="0">Sem limite</button>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>🎛️ Preferências</h3>
+        <label class="ajuste"><span>🔊 Sons</span><input type="checkbox" id="toggle-sons" class="toggle"></label>
+        <label class="ajuste"><span>📳 Vibração</span><input type="checkbox" id="toggle-vibracao" class="toggle"></label>
+        <label class="ajuste"><span>✨ Animações<small>Desative para reduzir movimento.</small></span><input type="checkbox" id="toggle-animacoes" class="toggle"></label>
+    </div>
+
+    <div class="card">
+        <h3>🎲 Regras da partida</h3>
+        <label class="ajuste"><span>🔂 Repetir a mesma pessoa<small>Permite sortear o mesmo alvo duas vezes seguidas.</small></span><input type="checkbox" id="toggle-repetir" class="toggle"></label>
+        <label class="ajuste"><span>🗣️ Direito de resposta<small>No vermelho, quem foi criticado pode rebater.</small></span><input type="checkbox" id="toggle-direito" class="toggle"></label>
+        <label class="ajuste"><span>🃏 Regras especiais<small>Eventos do preto podem inverter a ordem, dobrar a rodada etc.</small></span><input type="checkbox" id="toggle-regras" class="toggle"></label>
+        <label class="ajuste"><span>⏭️ Permitir pular<small>Mostra o botão “Pular” no resultado.</small></span><input type="checkbox" id="toggle-pular" class="toggle"></label>
+    </div>
+
+    <div class="pilha-botoes">
+        <button class="btn btn-primario" id="btn-continuar-avancadas">Revisar e jogar →</button>
+    </div>
+</section>
+
+<!-- ================= 8. REVISÃO ================= -->
+<section class="tela" id="tela-revisao" aria-label="Revisão das configurações">
+    <button class="btn-voltar" data-volta="tela-avancadas">← Voltar</button>
+    <h2>✅ Tudo pronto?</h2>
+
+    <div class="card" id="resumo-config" aria-live="polite"></div>
+
+    <div class="card">
+        <h3>🎲 Ordem dos jogadores</h3>
+        <p id="ordem-revisao" class="ordem-texto"></p>
+        <button class="btn btn-sec" id="btn-embaralhar">🔀 Embaralhar ordem</button>
+    </div>
+
+    <div class="pilha-botoes">
+        <button class="btn btn-primario btn-gigante" id="btn-comecar">🚀 Começar partida</button>
+    </div>
+</section>
+
+<!-- ================= 9. PARTIDA ================= -->
+<section class="tela" id="tela-jogo" aria-label="Partida em andamento">
+    <header class="topo-jogo">
+        <div class="info-rodada" id="info-rodada" aria-live="polite">Rodada 1</div>
+        <div class="barra-progresso" aria-hidden="true"><span id="fill-progresso"></span></div>
+    </header>
+
+    <div class="card card-vez">
+        <small>Vez de</small>
+        <div class="nome-da-vez" id="nome-da-vez" aria-live="polite">—</div>
+    </div>
+
+    <div class="faixa-ordem" id="faixa-ordem" aria-label="Ordem dos jogadores"></div>
+
+    <div class="area-roletas">
+        <div class="roleta-wrap">
+            <span class="ponteiro" aria-hidden="true"></span>
+            <canvas id="canvas-jogadores" width="300" height="300" role="img" aria-label="Roleta de jogadores"></canvas>
+            <small class="rotulo-roleta">👥 Pessoa</small>
+        </div>
+        <div class="roleta-wrap">
+            <span class="ponteiro" aria-hidden="true"></span>
+            <canvas id="canvas-cores" width="300" height="300" role="img" aria-label="Roleta de cores"></canvas>
+            <small class="rotulo-roleta">🎨 Cor</small>
+        </div>
+    </div>
+
+    <button class="btn btn-primario btn-gigante" id="btn-girar">🎡 GIRAR ROLETAS</button>
+
+    <div class="linha-botoes">
+        <button class="btn btn-mini" id="btn-pausar">⏸️ Pausar</button>
+        <button class="btn btn-mini" id="btn-regras-jogo">📖 Regras</button>
+        <button class="btn btn-mini btn-perigo" id="btn-encerrar">🛑 Encerrar</button>
+    </div>
+</section>
+
+<!-- ================= 10. RESUMO FINAL ================= -->
+<section class="tela" id="tela-resumo" aria-label="Resumo da partida">
+    <div class="logo-emoji" aria-hidden="true">🏁</div>
+    <h2>Fim de jogo!</h2>
+    <div id="resumo-stats"></div>
+    <div class="pilha-botoes">
+        <button class="btn btn-primario" id="btn-denovo">🔁 Jogar novamente</button>
+        <button class="btn btn-sec" id="btn-nova-config">⚙️ Nova configuração</button>
+        <button class="btn btn-ghost" id="btn-voltar-inicio">🏠 Voltar ao início</button>
+    </div>
+</section>
+
+</main>
+
+<!-- ================= RESULTADO DA RODADA (overlay) ================= -->
+<div class="overlay" id="painel-resultado" role="dialog" aria-modal="true" aria-label="Resultado da rodada" hidden>
+    <div class="modal-card resultado-card">
+        <div class="crono" id="crono" hidden><span id="crono-num">15</span></div>
+        <div class="chip-cor" id="res-cor-chip">💙 Elogio</div>
+        <p class="res-sobre">sobre</p>
+        <div class="res-pessoa" id="res-pessoa">—</div>
+        <p class="res-instrucao" id="res-instrucao" aria-live="polite"></p>
+        <div class="res-extra" id="res-extra" hidden></div>
+        <button class="btn btn-sec" id="btn-sortear-extra" hidden>🎲 Sortear desafio</button>
+        <p class="res-consequencia" id="res-consequencia"></p>
+        <p class="res-aviso" id="res-aviso" hidden></p>
+        <div class="linha-botoes">
+            <button class="btn btn-primario" id="btn-cumprido">✅ Cumprido</button>
+            <button class="btn btn-sec" id="btn-pular">⏭️ Pular</button>
+        </div>
+        <button class="btn btn-primario btn-gigante" id="btn-proxima" disabled>➡️ Próxima rodada</button>
+    </div>
+</div>
+
+<!-- ================= MODAL DE PAUSA ================= -->
+<div class="overlay" id="modal-pausa" role="dialog" aria-modal="true" aria-label="Jogo pausado" hidden>
+    <div class="modal-card">
+        <h2>⏸️ Pausa</h2>
+        <p class="dica">A partida fica salva — pode fechar e voltar depois.</p>
+        <div class="pilha-botoes">
+            <button class="btn btn-primario" id="btn-continuar-pausa">▶️ Continuar</button>
+            <button class="btn btn-sec" id="btn-voltar-rodada">↩️ Voltar uma rodada</button>
+            <button class="btn btn-sec" id="btn-regras-pausa">📖 Regras</button>
+            <button class="btn btn-ghost btn-perigo" id="btn-encerrar-pausa">🛑 Encerrar partida</button>
+        </div>
+    </div>
+</div>
+
+<!-- ================= MODAL DE REGRAS RÁPIDAS ================= -->
+<div class="overlay" id="modal-regras" role="dialog" aria-modal="true" aria-label="Regras rápidas" hidden>
+    <div class="modal-card">
+        <h2>📖 Regras rápidas</h2>
+        <ul class="lista-cores" id="conteudo-regras"></ul>
+        <button class="btn btn-primario" id="btn-fechar-regras">Fechar</button>
+    </div>
+</div>
+
+<!-- ================= MODAL DE CONFIRMAÇÃO ================= -->
+<div class="overlay" id="modal-confirmar" role="dialog" aria-modal="true" aria-labelledby="conf-titulo" hidden>
+    <div class="modal-card">
+        <h2 id="conf-titulo">Tem certeza?</h2>
+        <p id="conf-texto" class="dica"></p>
+        <div class="linha-botoes">
+            <button class="btn btn-primario" id="btn-conf-sim">Sim</button>
+            <button class="btn btn-sec" id="btn-conf-nao">Cancelar</button>
+        </div>
+    </div>
+</div>
+
+<!-- Toast de mensagens -->
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script src="../ranking.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

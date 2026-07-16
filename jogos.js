@@ -86,6 +86,15 @@ const JOGOS = [
     cor: "#2DD4BF",
     link: "DUVIDO/index.html",
     chave: "duvido"
+  },
+  {
+    emoji: "🎡",
+    nome: "Roleta da Resenha",
+    descricao: "Duas roletas: uma sorteia a pessoa, a outra o que falar (ou fazer) sobre ela!",
+    jogadores: "3+ jogadores",
+    cor: "#F472B6",
+    link: "ROLETA-RESENHA/index.html",
+    chave: "roleta-resenha"
   }
 
   // 👉 Novo jogo? Adicione uma vírgula acima e cole um bloco aqui.
